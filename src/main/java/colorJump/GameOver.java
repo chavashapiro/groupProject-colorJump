@@ -20,6 +20,10 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 public class GameOver extends JFrame {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int scoreNum, bonusNum, totalNum;
 	private JLabel score, bonus, total, gameOver, scoreLbl, bonusLbl, totalLbl;
 	private JButton ok;

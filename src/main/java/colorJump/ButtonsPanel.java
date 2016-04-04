@@ -20,6 +20,10 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 public class ButtonsPanel extends JPanel implements MouseListener {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JButton restart;
 	private JButton help;
 	private JLabel score;
@@ -57,7 +61,7 @@ public class ButtonsPanel extends JPanel implements MouseListener {
 		}
 		logo = new JLabel(new ImageIcon(getClass().getResource("/Peg2.png")));
 
-		restart = new JButton("Restart");
+		restart = new JButton("New Game");
 		restart.setFont(bebasFont);
 		restart.setContentAreaFilled(false);
 		restart.addMouseListener(this);

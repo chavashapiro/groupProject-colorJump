@@ -13,6 +13,10 @@ import javax.swing.SwingUtilities;
 import javax.swing.border.LineBorder;
 
 public class GamePanel extends JPanel implements ActionListener, MouseListener {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Board board;
 	private Peg[][] pegs;
 	private Peg fromPeg;
