@@ -2,8 +2,11 @@ package colorJump;
 
 import java.util.Random;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
 import javax.swing.JPanel;
 
+@Singleton
 public class Board extends JPanel {
 
 	/**
