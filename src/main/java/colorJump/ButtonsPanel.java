@@ -12,6 +12,8 @@ import java.awt.event.MouseListener;
 import java.io.IOException;
 import java.io.InputStream;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
@@ -19,7 +21,12 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
+@Singleton
 public class ButtonsPanel extends JPanel implements MouseListener {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JButton restart;
 	private JButton help;
 	private JLabel score;
@@ -28,7 +35,7 @@ public class ButtonsPanel extends JPanel implements MouseListener {
 	private JLabel logo;
 	private GamePanel gamePanel;
 	private Font bebasFont;
-
+	@Inject
 	public ButtonsPanel(final GamePanel gamePanel) {
 		setLayout(new GridLayout(4, 0));
 		setOpaque(false);
@@ -57,7 +64,7 @@ public class ButtonsPanel extends JPanel implements MouseListener {
 		}
 		logo = new JLabel(new ImageIcon(getClass().getResource("/Peg2.png")));
 
-		restart = new JButton("Restart");
+		restart = new JButton("New Game");
 		restart.setFont(bebasFont);
 		restart.setContentAreaFilled(false);
 		restart.addMouseListener(this);

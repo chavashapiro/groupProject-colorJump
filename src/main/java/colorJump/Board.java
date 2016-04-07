@@ -2,10 +2,17 @@ package colorJump;
 
 import java.util.Random;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
 import javax.swing.JPanel;
 
+@Singleton
 public class Board extends JPanel {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int[][] numbers;
 	private Random random;
 

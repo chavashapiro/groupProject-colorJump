@@ -8,11 +8,18 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.border.LineBorder;
 
+@Singleton
 public class GamePanel extends JPanel implements ActionListener, MouseListener {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Board board;
 	private Peg[][] pegs;
 	private Peg fromPeg;
@@ -21,13 +28,13 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener {
 	private int bonus;
 	private GameFrame gameFrame;
 
-	public GamePanel(GameFrame gameFrame) {
+	@Inject
+	public GamePanel(GameFrame gameFrame, Board board) {
 		setLayout(new GridLayout(7, 7, 5, 5));
 		setOpaque(false);
 		setBorder(new LineBorder(Color.BLACK));
 		this.gameFrame = gameFrame;
-
-		board = new Board();
+		this.board = board;
 		pegs = new Peg[7][7];
 		for (int i = 0; i < pegs.length; i++) {
 			for (int j = 0; j < pegs[0].length; j++) {
@@ -76,7 +83,8 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener {
 			fromPeg = null;
 			setDisabled();
 			if (gameOver()) {
-				new GameOver(this, gameFrame.getButtonsPanel()).setVisible(true);
+				new GameOver(this, gameFrame.getButtonsPanel())
+						.setVisible(true);
 			}
 		}
 	}

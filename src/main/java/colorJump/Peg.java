@@ -7,6 +7,10 @@ import javax.swing.JButton;
 import javax.swing.border.LineBorder;
 
 public class Peg extends JButton {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int color;
 	private int x;
 	private int y;
