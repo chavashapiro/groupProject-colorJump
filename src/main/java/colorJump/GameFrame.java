@@ -21,32 +21,25 @@ public class GameFrame extends JFrame {
 	private GamePanel gamePanel;
 
 	@Inject
-	public GameFrame(Board board) {
+	public GameFrame(GamePanel gamePanel, ButtonsPanel buttonsPanel) {
 		setTitle("PEG");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(850, 650);
 		setLayout(new BorderLayout());
 
-		gamePanel = new GamePanel(this, board);
-		buttonsPanel = new ButtonsPanel(gamePanel);
+		this.gamePanel = gamePanel;
+		this.buttonsPanel = buttonsPanel;
 		Container container = getContentPane();
 		container.setBackground(new Color(176, 224, 230));
 		container.add(gamePanel, BorderLayout.CENTER);
 		container.add(buttonsPanel, BorderLayout.EAST);
-	}
-
-	public GamePanel getGame() {
-		return gamePanel;
-	}
-
-	public ButtonsPanel getButtonsPanel() {
-		return buttonsPanel;
+		buttonsPanel.getHelp();
 	}
 
 	public static void main(String[] args) {
 		Injector injector = Guice.createInjector(new ColorJumpModule());
 		GameFrame gui = injector.getInstance(GameFrame.class);
 		gui.setVisible(true);
-		gui.getButtonsPanel().getHelp();
+		
 	}
 }

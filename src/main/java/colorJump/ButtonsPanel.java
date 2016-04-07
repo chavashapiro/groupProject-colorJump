@@ -33,18 +33,20 @@ public class ButtonsPanel extends JPanel implements MouseListener {
 	private JLabel scoreNum;
 	private JPanel scorePanel;
 	private JLabel logo;
-	private GamePanel gamePanel;
+//	private GamePanel gamePanel;
 	private Font bebasFont;
+	private GameFrame gameFrame;
+
 	@Inject
-	public ButtonsPanel(final GamePanel gamePanel) {
+	public ButtonsPanel(GamePanel gamePanel, GameFrame gameFrame) {
 		setLayout(new GridLayout(4, 0));
 		setOpaque(false);
 		Dimension d = new Dimension(200, 650);
 		this.setPreferredSize(d);
 		this.setMaximumSize(d);
 		this.setMinimumSize(d);
-
-		this.gamePanel = gamePanel;
+		this.gameFrame = gameFrame;
+	//	this.gamePanel = gamePanel;
 		this.bebasFont = null;
 
 		try {
@@ -139,6 +141,6 @@ public class ButtonsPanel extends JPanel implements MouseListener {
 
 	public void getHelp() {
 		HelpDialog help = new HelpDialog();
-		help.setLocationRelativeTo(gamePanel.getGameFrame());
+		help.setLocationRelativeTo(gameFrame);
 	}
 }

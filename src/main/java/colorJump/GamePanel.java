@@ -26,15 +26,16 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener {
 	private Peg toPeg;
 	private int score;
 	private int bonus;
-	private GameFrame gameFrame;
-
+	private ButtonsPanel buttonsPanel;
+private GameOver gameOverFrame;
 	@Inject
-	public GamePanel(GameFrame gameFrame, Board board) {
+	public GamePanel(final Board board, ButtonsPanel buttonsPanel, GameOver gameOver) {
 		setLayout(new GridLayout(7, 7, 5, 5));
 		setOpaque(false);
 		setBorder(new LineBorder(Color.BLACK));
-		this.gameFrame = gameFrame;
 		this.board = board;
+		this.buttonsPanel= buttonsPanel;
+		this.gameOverFrame=gameOver;
 		pegs = new Peg[7][7];
 		for (int i = 0; i < pegs.length; i++) {
 			for (int j = 0; j < pegs[0].length; j++) {
@@ -83,8 +84,7 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener {
 			fromPeg = null;
 			setDisabled();
 			if (gameOver()) {
-				new GameOver(this, gameFrame.getButtonsPanel())
-						.setVisible(true);
+				gameOverFrame.setVisible(true);
 			}
 		}
 	}
@@ -109,7 +109,7 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener {
 
 	public void setScore(int points) {
 		this.score += points;
-		gameFrame.getButtonsPanel().setScore(score);
+		buttonsPanel.setScore(score);
 	}
 
 	public void resetScore() {
@@ -313,9 +313,5 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener {
 
 	public int getBonus() {
 		return bonus;
-	}
-
-	public GameFrame getGameFrame() {
-		return gameFrame;
 	}
 }
