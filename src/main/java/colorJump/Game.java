@@ -27,24 +27,23 @@ public class Game extends JComponent {
 	private JButton help;
 	private ButtonsPanel buttonsPanel;
 	private Board board;
-	private EasyBoard easyBoard;
-	private HardBoard hardBoard;
 	private int points;
 
 	@Inject
-	public Game(EasyBoard easyBoard, HardBoard hardBoard,
-			ButtonsPanel buttonsPanel, CheckAlgorithms checker) {
+	public Game(Board board, ButtonsPanel buttonsPanel, CheckAlgorithms checker) {
 		setBackground(new Color(176, 224, 230));
 		setLayout(new BorderLayout());
-		this.buttonsPanel = buttonsPanel;
-		this.easyBoard = easyBoard;
-		this.hardBoard = hardBoard;
 		restartEasy = new JButton("NEW EASY GAME");
+		
 		restartHard = new JButton("NEW HARD GAME");
+		
 		help = new JButton("HELP");
-		addListeners();
-		this.buttonsPanel.addButton(help, restartEasy, restartHard);
-		board = this.hardBoard;
+		this.board = board;
+	addListeners();
+		buttonsPanel.addButton(help, restartEasy, restartHard);
+		this.buttonsPanel = buttonsPanel;
+		
+		
 		add(board, BorderLayout.CENTER);
 		add(this.buttonsPanel, BorderLayout.EAST);
 	}
@@ -54,8 +53,7 @@ public class Game extends JComponent {
 		restartEasy.addMouseListener(mouseListener);
 		restartHard.addMouseListener(mouseListener);
 		help.addMouseListener(mouseListener);
-		easyBoard.addListeners(listener, pegMouseListener);
-		hardBoard.addListeners(listener, pegMouseListener);
+		this.board.addListeners(listener, pegMouseListener);
 	}
 
 	ActionListener listener = new ActionListener() {
@@ -107,13 +105,15 @@ public class Game extends JComponent {
 			b.setBorder(null);
 			if (b == restartEasy) {
 				buttonsPanel.restart();
-				board = easyBoard;
+				board.setLevel(1);
 				board.restart();
 			} else if (b == restartHard) {
 				buttonsPanel.restart();
-				board = hardBoard;
+				board.setLevel(2);
 				board.restart();
-			} else {
+			}
+			else {
+
 				buttonsPanel.getHelp();
 			}
 		}
