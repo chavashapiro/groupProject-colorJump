@@ -3,6 +3,7 @@ package colorJump;
 import java.awt.BorderLayout;
 import java.awt.Container;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
 import com.google.inject.Guice;
@@ -24,7 +25,8 @@ public class ColorJumpFrame extends JFrame {
 		Container container = getContentPane();
 		container.add(game);
 		help.setLocationRelativeTo(this);
-
+		ImageIcon icon = new ImageIcon(getClass().getResource("/pink_peg.png"));
+		setIconImage(icon.getImage());
 	}
 
 	public static void main(String[] args) {
