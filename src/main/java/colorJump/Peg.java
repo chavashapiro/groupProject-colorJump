@@ -22,7 +22,7 @@ public class Peg extends JButton {
 		this.color = color;
 		this.x = x;
 		this.y = y;
-		setColor(color);
+		setColor(this.color);
 
 		this.setContentAreaFilled(false);
 		this.setOpaque(false);
@@ -45,7 +45,7 @@ public class Peg extends JButton {
 
 	public void setColor(int c) {
 		this.color = c;
-		String name = colorArray[c];
+		String name = colorArray[color];
 		this.setIcon(new ImageIcon(getClass().getResource(name)));
 		this.setDisabledIcon(new ImageIcon(getClass().getResource(name)));
 	}
