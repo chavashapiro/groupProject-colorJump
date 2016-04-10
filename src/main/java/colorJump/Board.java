@@ -7,19 +7,27 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseListener;
 import java.util.Random;
+
 import javax.inject.Singleton;
 import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
 
 @Singleton
-public class Board extends JPanel{
+
+
+public abstract class Board extends JPanel {
+
+	/**
+	 * 
+	 */
+
 	private static final long serialVersionUID = 1L;
-	private Peg[][] pegs;
-	private Peg fromPeg;
-	private Peg toPeg;
-	private boolean bonus;
-	private boolean gameOver;
-	private final int ROWS;
+	protected Peg[][] pegs;
+	protected Peg fromPeg;
+	protected Peg toPeg;
+	protected boolean bonus;
+	protected boolean gameOver;
+	protected final int ROWS;
 
 	public Board() {
 		ROWS = 7;
@@ -31,7 +39,7 @@ public class Board extends JPanel{
 		addPegs();
 	}
 
-	private void addPegs() {
+	protected void addPegs() {
 		// TODO Auto-generated method stub
 		for (int i = 0; i < pegs.length; i++) {
 			for (int j = 0; j < pegs[i].length; j++) {
@@ -44,7 +52,7 @@ public class Board extends JPanel{
 		enableAllPegs();
 	}
 
-	private void setMiddlePeg() {
+	protected void setMiddlePeg() {
 		// TODO Auto-generated method stub
 		int middle = ROWS / 2;
 		pegs[middle][middle].setOpaque(false);
@@ -60,7 +68,7 @@ public class Board extends JPanel{
 		}
 	}
 
-	private void checkEnablePeg(int i, int j) {
+	protected void checkEnablePeg(int i, int j) {
 		// TODO Auto-generated method stub
 		if (isEnabled(i, j)) {
 			enablePeg(i, j);
@@ -69,7 +77,7 @@ public class Board extends JPanel{
 		}
 	}
 
-	private void disablePeg(int i, int j) {
+	protected void disablePeg(int i, int j) {
 		// TODO Auto-generated method stub
 		pegs[i][j].setEnabled(false);
 		pegs[i][j].setCursor(Cursor.getDefaultCursor());
@@ -95,6 +103,7 @@ public class Board extends JPanel{
 		setMiddlePeg();
 		deselectFromPeg();
 		bonus = false;
+		enableAllPegs();
 	}
 
 	public void deselectFromPeg() {
@@ -102,7 +111,7 @@ public class Board extends JPanel{
 		fromPeg = null;
 	}
 
-	private boolean gameOver() {
+	protected boolean gameOver() {
 		int count = 0;
 		for (int i = 0; i < pegs.length; i++) {
 			for (int j = 0; j < pegs[0].length; j++) {
@@ -135,14 +144,14 @@ public class Board extends JPanel{
 				x, y));
 	}
 
-	private void setOpenSpots(int x, int y) {
+	protected void setOpenSpots(int x, int y) {
 		openRight(x, y);
 		openLeft(x, y);
 		openUp(x, y);
 		openDown(x, y);
 	}
 
-	private void openUp(int x, int y) {
+	protected void openUp(int x, int y) {
 		// TODO Auto-generated method stub
 		int row = x - 1;
 		if (row < 0) {
@@ -164,7 +173,7 @@ public class Board extends JPanel{
 		}
 	}
 
-	private void openLeft(int x, int y) {
+	protected void openLeft(int x, int y) {
 		// TODO Auto-generated method stub
 		int col = y - 1;
 		if (col < 0) {
@@ -186,7 +195,7 @@ public class Board extends JPanel{
 		}
 	}
 
-	private void openDown(int x, int y) {
+	protected void openDown(int x, int y) {
 		// TODO Auto-generated method stub
 		int row = x + 1;
 		if (row >= ROWS) {
@@ -208,7 +217,7 @@ public class Board extends JPanel{
 		}
 	}
 
-	private void openRight(int x, int y) {
+	protected void openRight(int x, int y) {
 		// TODO Auto-generated method stub
 		int col = y + 1;
 		if (col >= ROWS) {
@@ -230,7 +239,7 @@ public class Board extends JPanel{
 		}
 	}
 
-	private boolean checkRight(int x, int y) {
+	protected boolean checkRight(int x, int y) {
 		int currColor = pegs[x][y].getPegColor();
 		int col = y + 1;
 		if (col >= ROWS) {
@@ -253,7 +262,7 @@ public class Board extends JPanel{
 		return false;
 	}
 
-	private boolean checkLeft(int x, int y) {
+	protected boolean checkLeft(int x, int y) {
 		int currColor = pegs[x][y].getPegColor();
 		int col = y - 1;
 		if (col < 0) {
@@ -277,7 +286,7 @@ public class Board extends JPanel{
 		return false;
 	}
 
-	private boolean checkUp(int x, int y) {
+	protected boolean checkUp(int x, int y) {
 
 		int currColor = pegs[x][y].getPegColor();
 		int row = x - 1;
@@ -302,7 +311,7 @@ public class Board extends JPanel{
 		return false;
 	}
 
-	private boolean checkDown(int x, int y) {
+	protected boolean checkDown(int x, int y) {
 
 		int currColor = pegs[x][y].getPegColor();
 		int row = x + 1;
@@ -326,7 +335,7 @@ public class Board extends JPanel{
 		return false;
 	}
 
-	private void disableAll() {
+	protected void disableAll() {
 		for (int i = 0; i < pegs.length; i++) {
 			for (int j = 0; j < pegs[0].length; j++) {
 				pegs[i][j].setEnabled(false);
@@ -335,39 +344,9 @@ public class Board extends JPanel{
 		}
 	}
 	
-	private void removeSpots() {
-		int fromX = fromPeg.getXLocation();
-		int toX = toPeg.getXLocation();
-		int fromY = fromPeg.getYLocation();
-		int toY = toPeg.getYLocation();
-		if (fromX == toX) {
-			// left
-			if (fromY > toY) {
-				for (int i = toY + 1; i <= fromY; i++) {
-					erasePeg(fromX, i);
-				}
-			}
-			// right
-			else {
-				for (int i = fromY; i < toY; i++) {
-					erasePeg(fromX,i);
-				}
-			}
-		} else {
-			// up
-			if (fromX > toX) {
-				for (int i = toX + 1; i <= fromX; i++) {
-					erasePeg(i,fromY);
-				}
-			}
-			// down
-			else {
-				for (int i = fromX; i < toX; i++) {
-					erasePeg(i, fromY);
-				}
-			}
-		}
-	}
+	abstract void removeSpots(); 
+		
+	
 	public void erasePeg(int i, int j) {
 		pegs[i][j].setColor(0);
 	}
@@ -415,7 +394,7 @@ public class Board extends JPanel{
 
 	}
 
-	private int setMoveScore(int spaces) {
+	protected int setMoveScore(int spaces) {
 		// TODO Auto-generated method stub
 		int score = 0;
 		switch (spaces - 1) {

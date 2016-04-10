@@ -24,7 +24,8 @@ public class ButtonsPanel extends JPanel{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private JButton restart;
+	private JButton easyRestart;
+	private JButton hardRestart;
 	private JButton help;
 	private JLabel scoreLabel;
 	private JLabel scoreNumLabel;
@@ -37,7 +38,7 @@ public class ButtonsPanel extends JPanel{
 
 	@Inject
 	public ButtonsPanel(HelpDialog helpDialog) {
-		setLayout(new GridLayout(4, 0));
+		setLayout(new GridLayout(5, 0));
 		setOpaque(false);
 		setPanelSize();
 		this.helpDialog = helpDialog;
@@ -120,18 +121,21 @@ public class ButtonsPanel extends JPanel{
 		helpDialog.setVisible(true);
 	}
 
-	public void addButton(JButton restartButton, JButton helpButton) {
-		// TODO Auto-generated method stub
-		this.restart = restartButton;
-		formatButton(restart);
+
+	public void addButton( JButton helpButton, JButton easyRestart, JButton hardRestart) {
+		this.easyRestart = easyRestart;
+		formatButton(easyRestart);
+		this.hardRestart = hardRestart;
+		formatButton(hardRestart);
 		add(logo);
 		add(scorePanel);
-		add(restart);
+		add(easyRestart);
+		add(hardRestart);
 		help=helpButton;
 		formatButton(help);
 		add(help);
-
 	}
+
 
 	public void restart() {
 		// TODO Auto-generated method stub4

@@ -4,7 +4,7 @@ import javax.inject.Inject;
 
 public class CheckAlgorithms {
 	@Inject
-	public CheckAlgorithms(Board board){
+	public CheckAlgorithms(){
 		
 	}
 

@@ -21,26 +21,34 @@ public class Game extends JComponent {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private JButton restart;
+
+	private JButton restartEasy;
+	private JButton restartHard;
 	private JButton help;
 	private ButtonsPanel buttonsPanel;
 	private Board board;
+	private EasyBoard easyBoard;
+	private HardBoard hardBoard;
 	private int points;
-
 	@Inject
-	public Game(Board gameBoard, ButtonsPanel buttonsPanel, CheckAlgorithms checker) {
+	public Game(EasyBoard easyBoard, HardBoard hardBoard, ButtonsPanel buttonsPanel, CheckAlgorithms checker) {
 		setBackground(new Color(176, 224, 230));
 		setLayout(new BorderLayout());
-		restart = new JButton("NEW GAME");
-		restart.addMouseListener(mouseListener);
+		restartEasy = new JButton("NEW EASY GAME");
+		restartEasy.addMouseListener(mouseListener);
+		restartHard = new JButton("NEW HARD GAME");
+		restartHard.addMouseListener(mouseListener);
 		help= new JButton("HELP");
 		help.addMouseListener(mouseListener);
-		buttonsPanel.addButton(restart, help);
+		buttonsPanel.addButton(help, restartEasy, restartHard);
 		this.buttonsPanel = buttonsPanel;
-		board = gameBoard;
-		board.addListeners(listener, pegMouseListener);
+		this.easyBoard = easyBoard;
+		this.hardBoard = hardBoard;
+		this.easyBoard.addListeners(listener, pegMouseListener);
+		this.hardBoard.addListeners(listener, pegMouseListener);
+		board = this.easyBoard;
 		add(board, BorderLayout.CENTER);
-		add(buttonsPanel, BorderLayout.EAST);
+		add(this.buttonsPanel, BorderLayout.EAST);
 	}
 
 	ActionListener listener = new ActionListener() {
@@ -78,11 +86,11 @@ public class Game extends JComponent {
 		}
 
 	};
-	MouseListener pegMouseListener = new MouseAdapter() {
 
+	MouseListener pegMouseListener = new MouseAdapter() {
 		public void mouseClicked(MouseEvent e) {
 			// TODO Auto-generated method stub
-			System.out.println("mouse cliked");
+			System.out.println("mouse clicked");
 			if (SwingUtilities.isRightMouseButton(e)) {
 				board.deselectFromPeg();
 				board.enableAllPegs();
@@ -96,24 +104,41 @@ public class Game extends JComponent {
 			b.setBorderPainted(false);
 			b.setContentAreaFilled(false);
 			b.setBorder(null);
-			if (b == restart) {
+			if (b == restartEasy) {
 				buttonsPanel.restart();
 				board.restart();
+				board = easyBoard;
+				board.restart();
 				
-			}else{
-				buttonsPanel.getHelp();
+			}else if(b==restartHard){
+				buttonsPanel.restart();
+				board.restart();
+				board = hardBoard;
+				board.restart();
 			}
-		}
-
+			
+			else{
+				buttonsPanel.getHelp();
+			}}
 		public void mouseEntered(MouseEvent e) {
+			if (e.getSource() == restartEasy) {
 				JButton b = (JButton) e.getSource();
 				b.setForeground(Color.GRAY);
+			}
 		}
 
 		public void mouseExited(MouseEvent e) {
 			JButton b = (JButton) e.getSource();
 			b.setForeground(Color.BLACK);
 		}
+
+		public void mousePressed(MouseEvent e) {
+			JButton b = (JButton) e.getSource();
+			b.setContentAreaFilled(false);
+		}		
 	};
+	
+	
+		
 
 }
