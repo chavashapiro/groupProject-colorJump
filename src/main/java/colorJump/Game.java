@@ -28,7 +28,7 @@ public class Game extends JComponent {
 	private int points;
 
 	@Inject
-	public Game(Board gameBoard, ButtonsPanel buttonsPanel) {
+	public Game(Board gameBoard, ButtonsPanel buttonsPanel, CheckAlgorithms checker) {
 		setBackground(new Color(176, 224, 230));
 		setLayout(new BorderLayout());
 		restart = new JButton("NEW GAME");
@@ -51,9 +51,11 @@ public class Game extends JComponent {
 
 			Thread thread = new Thread() {
 				public void run() {
+					setCursor(new Cursor(Cursor.WAIT_CURSOR));
 					System.out.println("trying");
 					points = board.pegClicked(e);
 					System.out.println("done checking");
+					setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 				}
 			};
 			thread.start();
@@ -72,7 +74,7 @@ public class Game extends JComponent {
 						buttonsPanel.getBonus());
 				gameOver.setVisible(true);
 			}
-			setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+			
 		}
 
 	};
