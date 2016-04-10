@@ -39,7 +39,7 @@ public class Peg extends JButton {
 		return y;
 	}
 
-	public int getColor() {
+	public int getPegColor() {
 		return color;
 	}
 
