@@ -13,8 +13,6 @@ import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
 
 @Singleton
-
-
 public abstract class Board extends JPanel {
 
 	/**
@@ -72,7 +70,7 @@ public abstract class Board extends JPanel {
 		// TODO Auto-generated method stub
 		if (isEnabled(i, j)) {
 			enablePeg(i, j);
-		}else{
+		} else {
 			disablePeg(i, j);
 		}
 	}
@@ -101,13 +99,17 @@ public abstract class Board extends JPanel {
 			}
 		}
 		setMiddlePeg();
+
 		deselectFromPeg();
+
 		bonus = false;
 		enableAllPegs();
 	}
 
 	public void deselectFromPeg() {
-		fromPeg.deselect();
+		if (fromPeg != null) {
+			fromPeg.deselect();
+		}
 		fromPeg = null;
 	}
 
@@ -145,98 +147,94 @@ public abstract class Board extends JPanel {
 	}
 
 	protected void setOpenSpots(int x, int y) {
-		openRight(x, y);
-		openLeft(x, y);
-		openUp(x, y);
-		openDown(x, y);
+		checkOpenLeft(x, y);
+		checkOpenUp(x, y);
+		checkOpenRight(x, y);
+		checkOpenDown(x, y);
 	}
 
-	protected void openUp(int x, int y) {
-		// TODO Auto-generated method stub
-		int row = x - 1;
-		if (row < 0) {
-			return;
-		}
-		int myColor = pegs[x][y].getPegColor();
-		int jumpColor = pegs[row][y].getPegColor();
-		if (myColor == jumpColor) {
-			return;
-		}
-		int newJumpColor = jumpColor;
-		row--;
-		while (row >= 0 && newJumpColor == jumpColor) {
-			if (pegs[row][y].getPegColor() == 0) {
-				enablePeg(row, y);
-				return;
+	private boolean checkOpenDown(int x, int y) {
+		int currColor = pegs[x][y].getPegColor();
+		int jumpOverColor;
+		if (x + 1 < pegs.length
+				&& currColor != (jumpOverColor = pegs[x + 1][y].getPegColor())
+				&& jumpOverColor != 0) {
+			while (x + 1 < pegs.length
+					&& (jumpOverColor == pegs[x + 1][y].getPegColor() || pegs[x + 1][y]
+							.getPegColor() == 0)) {
+				x++;
+				if (pegs[x][y].getPegColor() == 0) {
+
+					enablePeg(x, y);
+
+					return true;
+				}
 			}
-			newJumpColor = pegs[row][y].getPegColor();
 		}
+		return false;
 	}
 
-	protected void openLeft(int x, int y) {
-		// TODO Auto-generated method stub
-		int col = y - 1;
-		if (col < 0) {
-			return;
-		}
-		int myColor = pegs[x][y].getPegColor();
-		int jumpColor = pegs[x][col].getPegColor();
-		if (myColor == jumpColor) {
-			return;
-		}
-		int newJumpColor = jumpColor;
-		col--;
-		while (col >= 0 && newJumpColor == jumpColor) {
-			if (pegs[x][col].getPegColor() == 0) {
-				enablePeg(x, col);
-				return;
+	private boolean checkOpenRight(int x, int y) {
+		int currColor = pegs[x][y].getPegColor();
+		int jumpOverColor;
+		if (y + 1 < pegs[0].length
+				&& currColor != (jumpOverColor = pegs[x][y + 1].getPegColor())
+				&& jumpOverColor != 0) {
+			while (y + 1 < pegs[0].length
+					&& (jumpOverColor == pegs[x][y + 1].getPegColor() || pegs[x][y + 1]
+							.getPegColor() == 0)) {
+				y++;
+				if (pegs[x][y].getPegColor() == 0) {
+
+					enablePeg(x, y);
+
+					return true;
+				}
 			}
-			newJumpColor = pegs[x][col].getPegColor();
 		}
+		return false;
 	}
 
-	protected void openDown(int x, int y) {
-		// TODO Auto-generated method stub
-		int row = x + 1;
-		if (row >= ROWS) {
-			return;
-		}
-		int myColor = pegs[x][y].getPegColor();
-		int jumpColor = pegs[row][y].getPegColor();
-		if (myColor == jumpColor) {
-			return;
-		}
-		int newJumpColor = jumpColor;
-		row++;
-		while (row < ROWS && newJumpColor == jumpColor) {
-			if (pegs[row][y].getPegColor() == 0) {
-				enablePeg(row, y);
-				return;
+	private boolean checkOpenLeft(int x, int y) {
+		int currColor = pegs[x][y].getPegColor();
+		int jumpOverColor;
+		if (y > 0
+				&& currColor != (jumpOverColor = pegs[x][y - 1].getPegColor())
+				&& jumpOverColor != 0) {
+			while (y > 0
+					&& (jumpOverColor == pegs[x][y - 1].getPegColor() || pegs[x][y - 1]
+							.getPegColor() == 0)) {
+				y--;
+				if (pegs[x][y].getPegColor() == 0) {
+
+					enablePeg(x, y);
+
+					return true;
+				}
 			}
-			newJumpColor = pegs[row][y].getPegColor();
 		}
+		return false;
 	}
 
-	protected void openRight(int x, int y) {
-		// TODO Auto-generated method stub
-		int col = y + 1;
-		if (col >= ROWS) {
-			return;
-		}
-		int myColor = pegs[x][y].getPegColor();
-		int jumpColor = pegs[x][col].getPegColor();
-		if (myColor == jumpColor) {
-			return;
-		}
-		int newJumpColor = jumpColor;
-		col++;
-		while (col < ROWS && newJumpColor == jumpColor) {
-			if (pegs[x][col].getPegColor() == 0) {
-				enablePeg(x, col);
-				return;
+	private boolean checkOpenUp(int x, int y) {
+		int currColor = pegs[x][y].getPegColor();
+		int jumpOverColor;
+		if (x > 0
+				&& currColor != (jumpOverColor = pegs[x - 1][y].getPegColor())
+				&& jumpOverColor != 0) {
+			while (x > 0
+					&& (jumpOverColor == pegs[x - 1][y].getPegColor() || pegs[x - 1][y]
+							.getPegColor() == 0)) {
+				x--;
+				if (pegs[x][y].getPegColor() == 0) {
+
+					enablePeg(x, y);
+
+					return true;
+				}
 			}
-			newJumpColor = pegs[x][col].getPegColor();
 		}
+		return false;
 	}
 
 	protected boolean checkRight(int x, int y) {
@@ -343,10 +341,9 @@ public abstract class Board extends JPanel {
 			}
 		}
 	}
-	
-	abstract void removeSpots(); 
-		
-	
+
+	abstract void removeSpots();
+
 	public void erasePeg(int i, int j) {
 		pegs[i][j].setColor(0);
 	}
@@ -366,7 +363,7 @@ public abstract class Board extends JPanel {
 				toPeg.setBackground(Color.WHITE);
 			}
 			points = move();
-			
+
 			fromPeg.deselect();
 			fromPeg = null;
 			enableAllPegs();
@@ -436,5 +433,4 @@ public abstract class Board extends JPanel {
 		return bonus;
 	}
 
-	
 }
