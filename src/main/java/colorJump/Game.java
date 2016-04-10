@@ -121,10 +121,8 @@ public class Game extends JComponent {
 				buttonsPanel.getHelp();
 			}}
 		public void mouseEntered(MouseEvent e) {
-			if (e.getSource() == restartEasy) {
 				JButton b = (JButton) e.getSource();
 				b.setForeground(Color.GRAY);
-			}
 		}
 
 		public void mouseExited(MouseEvent e) {

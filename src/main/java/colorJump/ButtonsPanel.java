@@ -124,13 +124,13 @@ public class ButtonsPanel extends JPanel{
 
 	public void addButton( JButton helpButton, JButton easyRestart, JButton hardRestart) {
 		this.easyRestart = easyRestart;
-		formatButton(easyRestart);
+		formatButton(this.easyRestart);
 		this.hardRestart = hardRestart;
-		formatButton(hardRestart);
+		formatButton(this.hardRestart);
 		add(logo);
 		add(scorePanel);
-		add(easyRestart);
-		add(hardRestart);
+		add(this.easyRestart);
+		add(this.hardRestart);
 		help=helpButton;
 		formatButton(help);
 		add(help);
