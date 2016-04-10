@@ -20,23 +20,33 @@ public class Game extends JComponent{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private JButton restart;
+	private JButton restartEasy;
+	private JButton restartHard;
 	private ButtonsPanel buttonsPanel;
 	private Board board;
+	private EasyBoard easyBoard;
+	private HardBoard hardBoard;
 
 	@Inject
-	public Game(Board gameBoard, ButtonsPanel buttonsPanel) {
+	public Game(EasyBoard easyBoard, HardBoard hardBoard, ButtonsPanel buttonsPanel) {
 		setBackground(new Color(176, 224, 230));
 		setLayout(new BorderLayout());
-		restart = new JButton("NEW GAME");
-		restart.addMouseListener(mouseListener);
-		buttonsPanel.addButton(restart);
+		restartEasy = new JButton("NEW EASY GAME");
+		restartEasy.addMouseListener(easyMouseListener);
+		buttonsPanel.addEasyButton(restartEasy);
+		restartHard = new JButton("NEW HARD GAME");
+		restartHard.addMouseListener(hardMouseListener);
+		buttonsPanel.addHardButton(restartHard);
 		this.buttonsPanel = buttonsPanel;
-		board = gameBoard;
-		board.addListeners(listener, pegMouseListener);
+		this.easyBoard = easyBoard;
+		this.hardBoard = hardBoard;
+		this.easyBoard.addListeners(listener, pegMouseListener);
+		this.hardBoard.addListeners(listener, pegMouseListener);
+		board = this.easyBoard;
 		add(board, BorderLayout.CENTER);
-		add(buttonsPanel, BorderLayout.EAST);
+		add(this.buttonsPanel, BorderLayout.EAST);
 	}
+	
 	ActionListener listener = new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub
@@ -56,11 +66,12 @@ public class Game extends JComponent{
 
 		
 	};
+	
 	MouseListener pegMouseListener= new MouseListener(){
 
 		public void mouseClicked(MouseEvent e) {
 			// TODO Auto-generated method stub
-			System.out.println("mouse cliked");
+			System.out.println("mouse clicked");
 			if (SwingUtilities.isRightMouseButton(e)) {
 				board.deselectFromPeg();
 				board.enableAllPegs();
@@ -91,19 +102,58 @@ public class Game extends JComponent{
 		}
 		
 	};
-	MouseListener mouseListener= new MouseListener(){
+	
+	MouseListener easyMouseListener= new MouseListener(){
 		public void mouseClicked(MouseEvent e) {
-			if (e.getSource() == restart) {
+			if (e.getSource() == restartEasy) {
 				buttonsPanel.restart();
 				board.restart();
-				restart.setBorderPainted(false);
-				restart.setBorder(null);
+				board = easyBoard;
+				board.restart();
+				restartEasy.setBorderPainted(false);
+				restartEasy.setBorder(null);
 			}
 
 		}
 
 		public void mouseEntered(MouseEvent e) {
-			if (e.getSource() == restart) {
+			if (e.getSource() == restartEasy) {
+				JButton b = (JButton) e.getSource();
+				b.setForeground(Color.GRAY);
+			}
+		}
+
+		public void mouseExited(MouseEvent e) {
+			JButton b = (JButton) e.getSource();
+			b.setForeground(Color.BLACK);
+		}
+
+		public void mousePressed(MouseEvent e) {
+			JButton b = (JButton) e.getSource();
+			b.setContentAreaFilled(false);
+		}
+
+		public void mouseReleased(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+	};
+	
+	MouseListener hardMouseListener= new MouseListener(){
+		public void mouseClicked(MouseEvent e) {
+			if (e.getSource() == restartHard) {
+				buttonsPanel.restart();
+				board.restart();
+				board = hardBoard;
+				board.restart();
+				restartHard.setBorderPainted(false);
+				restartHard.setBorder(null);
+			}
+
+		}
+
+		public void mouseEntered(MouseEvent e) {
+			if (e.getSource() == restartHard) {
 				JButton b = (JButton) e.getSource();
 				b.setForeground(Color.GRAY);
 			}

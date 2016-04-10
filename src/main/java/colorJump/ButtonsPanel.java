@@ -27,7 +27,8 @@ public class ButtonsPanel extends JPanel implements MouseListener {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private JButton restart;
+	private JButton easyRestart;
+	private JButton hardRestart;
 	private JButton help;
 	private JLabel scoreLabel;
 	private JLabel scoreNumLabel;
@@ -40,7 +41,7 @@ public class ButtonsPanel extends JPanel implements MouseListener {
 
 	@Inject
 	public ButtonsPanel(HelpDialog helpDialog) {
-		setLayout(new GridLayout(4, 0));
+		setLayout(new GridLayout(5, 0));
 		setOpaque(false);
 		setPanelSize();
 		this.helpDialog = helpDialog;
@@ -154,13 +155,20 @@ public class ButtonsPanel extends JPanel implements MouseListener {
 		helpDialog.setVisible(true);
 	}
 
-	public void addButton(JButton restartButton) {
+	public void addEasyButton(JButton restartButton) {
 		// TODO Auto-generated method stub
-		this.restart = restartButton;
-		formatButton(restart);
+		this.easyRestart = restartButton;
+		formatButton(easyRestart);
+	}
+	
+	public void addHardButton(JButton restartButton) {
+		// TODO Auto-generated method stub
+		this.hardRestart = restartButton;
+		formatButton(hardRestart);
 		add(logo);
 		add(scorePanel);
-		add(restart);
+		add(easyRestart);
+		add(hardRestart);
 		add(help);
 
 	}
