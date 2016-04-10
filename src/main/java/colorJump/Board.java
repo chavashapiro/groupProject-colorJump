@@ -5,15 +5,17 @@ import java.awt.Cursor;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.Random;
 
 import javax.inject.Singleton;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 import javax.swing.border.LineBorder;
 
 @Singleton
-public class Board extends JPanel {
+public class Board extends JPanel{
 
 	/**
 	 * 
@@ -452,7 +454,7 @@ public class Board extends JPanel {
 		for (int i = 0; i < pegs.length; i++) {
 			for (int j = 0; j < pegs[i].length; j++) {
 				pegs[i][j].addActionListener(listener);
-			//	pegs[i][j].addMouseListener(mouseListener);
+				pegs[i][j].addMouseListener(mouseListener);
 			}
 		}
 	}
@@ -460,4 +462,6 @@ public class Board extends JPanel {
 	public boolean isBonus() {
 		return bonus;
 	}
+
+	
 }

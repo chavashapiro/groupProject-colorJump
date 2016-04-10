@@ -22,7 +22,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 @Singleton
-public class ButtonsPanel extends JPanel implements MouseListener {
+public class ButtonsPanel extends JPanel{
 	/**
 	 * 
 	 */
@@ -34,7 +34,7 @@ public class ButtonsPanel extends JPanel implements MouseListener {
 	private JPanel scorePanel;
 	private JLabel logo;
 	private Font bebasFont;
-	HelpDialog helpDialog;
+	private HelpDialog helpDialog;
 	private int points;
 	private int bonus;
 
@@ -48,9 +48,6 @@ public class ButtonsPanel extends JPanel implements MouseListener {
 		bonus = 0;
 		setFonts();
 		logo = new JLabel(new ImageIcon(getClass().getResource("/Peg2.png")));
-		help = new JButton("Help");
-		formatButton(help);
-		help.addMouseListener(this);
 		scorePanel = new JPanel(new BorderLayout());
 		removeDecor(scorePanel);
 		scoreNumLabel = new JLabel("0");
@@ -121,46 +118,20 @@ public class ButtonsPanel extends JPanel implements MouseListener {
 		c.setBorder(null);
 		c.setFont(bebasFont);
 	}
-
-	public void mouseClicked(MouseEvent e) {
-		JButton b = (JButton) e.getSource();
-		if (b == help) {
-			getHelp();
-		}
-		b.setBorderPainted(false);
-		b.setBorder(null);
-	}
-
-	public void mouseEntered(MouseEvent e) {
-		JButton b = (JButton) e.getSource();
-		b.setForeground(Color.GRAY);
-	}
-
-	public void mouseExited(MouseEvent e) {
-		JButton b = (JButton) e.getSource();
-		b.setForeground(Color.BLACK);
-	}
-
-	public void mousePressed(MouseEvent e) {
-		JButton b = (JButton) e.getSource();
-		b.setContentAreaFilled(false);
-	}
-
-	public void mouseReleased(MouseEvent e) {
-	}
-
 	public void getHelp() {
 		helpDialog.setLocationRelativeTo(this);
 		helpDialog.setVisible(true);
 	}
 
-	public void addButton(JButton restartButton) {
+	public void addButton(JButton restartButton, JButton helpButton) {
 		// TODO Auto-generated method stub
 		this.restart = restartButton;
 		formatButton(restart);
 		add(logo);
 		add(scorePanel);
 		add(restart);
+		help=helpButton;
+		formatButton(help);
 		add(help);
 
 	}
