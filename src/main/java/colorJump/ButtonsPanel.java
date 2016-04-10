@@ -29,26 +29,56 @@ public class ButtonsPanel extends JPanel implements MouseListener {
 	private static final long serialVersionUID = 1L;
 	private JButton restart;
 	private JButton help;
-	private JLabel score;
-	private JLabel scoreNum;
+	private JLabel scoreLabel;
+	private JLabel scoreNumLabel;
 	private JPanel scorePanel;
 	private JLabel logo;
-//	private GamePanel gamePanel;
 	private Font bebasFont;
-	private GameFrame gameFrame;
+	HelpDialog helpDialog;
+	private int points;
+	private int bonus;
 
 	@Inject
-	public ButtonsPanel(GamePanel gamePanel, GameFrame gameFrame) {
+	public ButtonsPanel(HelpDialog helpDialog) {
 		setLayout(new GridLayout(4, 0));
 		setOpaque(false);
-		Dimension d = new Dimension(200, 650);
-		this.setPreferredSize(d);
-		this.setMaximumSize(d);
-		this.setMinimumSize(d);
-		this.gameFrame = gameFrame;
-	//	this.gamePanel = gamePanel;
-		this.bebasFont = null;
+		setPanelSize();
+		this.helpDialog = helpDialog;
+		points = 0;
+		bonus = 0;
+		setFonts();
+		logo = new JLabel(new ImageIcon(getClass().getResource("/Peg2.png")));
+		help = new JButton("Help");
+		formatButton(help);
+		help.addMouseListener(this);
+		scorePanel = new JPanel(new BorderLayout());
+		removeDecor(scorePanel);
+		scoreNumLabel = new JLabel("0");
+		scoreNumLabel.setPreferredSize(new Dimension(75, 50));
+		scoreLabel = new JLabel("SCORE: ", SwingConstants.RIGHT);
+		formatLabel(scoreNumLabel);
+		formatLabel(scoreLabel);
+		scorePanel.add(scoreLabel, BorderLayout.CENTER);
+		scorePanel.add(scoreNumLabel, BorderLayout.EAST);
 
+	}
+
+	private void formatLabel(JLabel label) {
+		// TODO Auto-generated method stub
+		label.setFont(bebasFont);
+		removeDecor(label);
+	}
+
+	private void formatButton(JButton button) {
+		// TODO Auto-generated method stub
+		button.setFont(bebasFont);
+		button.setContentAreaFilled(false);
+		removeDecor(button);
+
+	}
+
+	private void setFonts() {
+		// TODO Auto-generated method stub
 		try {
 			GraphicsEnvironment ge = GraphicsEnvironment
 					.getLocalGraphicsEnvironment();
@@ -64,42 +94,26 @@ public class ButtonsPanel extends JPanel implements MouseListener {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		logo = new JLabel(new ImageIcon(getClass().getResource("/Peg2.png")));
-
-		restart = new JButton("New Game");
-		restart.setFont(bebasFont);
-		restart.setContentAreaFilled(false);
-		restart.addMouseListener(this);
-		removeDecor(restart);
-		help = new JButton("Help");
-		help.setFont(bebasFont);
-		help.setContentAreaFilled(false);
-		help.addMouseListener(this);
-		removeDecor(help);
-
-		scorePanel = new JPanel(new BorderLayout());
-		removeDecor(scorePanel);
-
-		scoreNum = new JLabel("0");
-		scoreNum.setFont(bebasFont);
-		scoreNum.setPreferredSize(new Dimension(75, 50));
-		removeDecor(scoreNum);
-
-		score = new JLabel("SCORE: ", SwingConstants.RIGHT);
-		score.setFont(bebasFont);
-		removeDecor(score);
-
-		scorePanel.add(score, BorderLayout.CENTER);
-		scorePanel.add(scoreNum, BorderLayout.EAST);
-
-		add(logo);
-		add(scorePanel);
-		add(restart);
-		add(help);
 	}
 
-	public void setScore(int s) {
-		scoreNum.setText(String.valueOf(s));
+	private void setPanelSize() {
+		// TODO Auto-generated method stub
+		Dimension d = new Dimension(200, 650);
+		this.setPreferredSize(d);
+		this.setMaximumSize(d);
+		this.setMinimumSize(d);
+	}
+
+	public int getScore() {
+		return points;
+	}
+
+	public int getBonus() {
+		return bonus;
+	}
+
+	public void setBonus() {
+		this.bonus += points * 2;
 	}
 
 	public void removeDecor(JComponent c) {
@@ -110,11 +124,7 @@ public class ButtonsPanel extends JPanel implements MouseListener {
 
 	public void mouseClicked(MouseEvent e) {
 		JButton b = (JButton) e.getSource();
-		if (b == restart) {
-			gamePanel.restart();
-			setScore(0);
-			gamePanel.resetScore();
-		} else if (b == help) {
+		if (b == help) {
 			getHelp();
 		}
 		b.setBorderPainted(false);
@@ -140,7 +150,35 @@ public class ButtonsPanel extends JPanel implements MouseListener {
 	}
 
 	public void getHelp() {
-		HelpDialog help = new HelpDialog();
-		help.setLocationRelativeTo(gameFrame);
+		helpDialog.setLocationRelativeTo(this);
+		helpDialog.setVisible(true);
+	}
+
+	public void addButton(JButton restartButton) {
+		// TODO Auto-generated method stub
+		this.restart = restartButton;
+		formatButton(restart);
+		add(logo);
+		add(scorePanel);
+		add(restart);
+		add(help);
+
+	}
+
+	public void restart() {
+		// TODO Auto-generated method stub4
+		points = 0;
+		bonus = 0;
+		setScore();
+	}
+
+	public void addScore(int points) {
+		// TODO Auto-generated method stub
+		this.points += points;
+		setScore();
+	}
+
+	public void setScore() {
+		scoreNumLabel.setText(String.valueOf(points));
 	}
 }

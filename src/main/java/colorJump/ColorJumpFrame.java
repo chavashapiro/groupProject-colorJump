@@ -1,44 +1,34 @@
 package colorJump;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Container;
-
-import javax.inject.Singleton;
 import javax.swing.JFrame;
-
 import com.google.inject.Guice;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
 
-@Singleton
-public class GameFrame extends JFrame {
+public class ColorJumpFrame extends JFrame {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private ButtonsPanel buttonsPanel;
-	private GamePanel gamePanel;
+	
 
 	@Inject
-	public GameFrame(GamePanel gamePanel, ButtonsPanel buttonsPanel) {
+	public ColorJumpFrame(Game game, HelpDialog help) {
 		setTitle("PEG");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(850, 650);
 		setLayout(new BorderLayout());
-
-		this.gamePanel = gamePanel;
-		this.buttonsPanel = buttonsPanel;
 		Container container = getContentPane();
-		container.setBackground(new Color(176, 224, 230));
-		container.add(gamePanel, BorderLayout.CENTER);
-		container.add(buttonsPanel, BorderLayout.EAST);
-		buttonsPanel.getHelp();
+		container.add(game);
+		help.setLocationRelativeTo(this);
+		
 	}
 
 	public static void main(String[] args) {
 		Injector injector = Guice.createInjector(new ColorJumpModule());
-		GameFrame gui = injector.getInstance(GameFrame.class);
+		ColorJumpFrame gui = injector.getInstance(ColorJumpFrame.class);
 		gui.setVisible(true);
 		
 	}

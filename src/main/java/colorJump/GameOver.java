@@ -10,8 +10,6 @@ import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-
-import javax.inject.Inject;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -29,20 +27,19 @@ public class GameOver extends JFrame {
 	private JLabel score, bonus, total, gameOver, scoreLbl, bonusLbl, totalLbl;
 	private JButton ok;
 
-	@Inject
-	public GameOver(final GamePanel game, final ButtonsPanel buttonsPanel,
-			GameFrame gameFrame) {
+	
+	public GameOver(int gameScore, int gameBonus) {
 		setTitle("");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(650, 450);
 		setLayout(new BorderLayout());
-		setLocationRelativeTo(gameFrame);
+		//setLocationRelativeTo(gameFrame);
 
 		Container container = getContentPane();
 		container.setBackground(new Color(176, 224, 230));
 
-		scoreNum = game.getScore();
-		bonusNum = game.getBonus();
+		scoreNum = gameScore;
+		bonusNum = gameBonus;
 		totalNum = scoreNum + bonusNum;
 
 		JPanel title = new JPanel();
@@ -60,8 +57,8 @@ public class GameOver extends JFrame {
 		scorePanel.setOpaque(false);
 		scorePanel.setLayout(new GridLayout(3, 2));
 		scorePanel.setBorder(new EmptyBorder(25, 100, 25, 100));
-		score = new JLabel(String.valueOf(scoreNum), SwingConstants.RIGHT);
-		bonus = new JLabel(String.valueOf(bonusNum), SwingConstants.RIGHT);
+		score = new JLabel(String.valueOf(gameScore), SwingConstants.RIGHT);
+		bonus = new JLabel(String.valueOf(gameBonus), SwingConstants.RIGHT);
 		total = new JLabel(String.valueOf(totalNum), SwingConstants.RIGHT);
 		scoreLbl = new JLabel("Score:");
 		bonusLbl = new JLabel("Bonus:");
@@ -93,8 +90,8 @@ public class GameOver extends JFrame {
 		ok.addMouseListener(new MouseListener() {
 
 			public void mouseClicked(MouseEvent arg0) {
-				game.restart();
-				buttonsPanel.setScore(0);
+//				game.restart();
+//				buttonsPanel.setScore(0);
 				dispose();
 			}
 
