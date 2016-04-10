@@ -34,16 +34,12 @@ public class Game extends JComponent {
 		setBackground(new Color(176, 224, 230));
 		setLayout(new BorderLayout());
 		restartEasy = new JButton("NEW EASY GAME");
-		
 		restartHard = new JButton("NEW HARD GAME");
-		
 		help = new JButton("HELP");
 		this.board = board;
-	addListeners();
+		addListeners();
 		buttonsPanel.addButton(help, restartEasy, restartHard);
 		this.buttonsPanel = buttonsPanel;
-		
-		
 		add(board, BorderLayout.CENTER);
 		add(this.buttonsPanel, BorderLayout.EAST);
 	}
@@ -64,24 +60,22 @@ public class Game extends JComponent {
 				public void run() {
 					setCursor(new Cursor(Cursor.WAIT_CURSOR));
 					points = board.pegClicked(e);
+					if (points > 0) {
+						buttonsPanel.addScore(points);
+					}
+					if (board.isGameOver()) {
+						if (board.isBonus()) {
+							buttonsPanel.setBonus();
+						}
+						GameOver gameOver = new GameOver(
+								buttonsPanel.getScore(),
+								buttonsPanel.getBonus());
+						gameOver.setVisible(true);
+					}
 					setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 				}
 			};
 			thread.start();
-
-			System.out.println("Action listener-peg clicked");
-			if (points > 0) {
-				buttonsPanel.addScore(points);
-			}
-			System.out.println("Action listener-check if game over");
-			if (board.isGameOver()) {
-				if (board.isBonus()) {
-					buttonsPanel.setBonus();
-				}
-				GameOver gameOver = new GameOver(buttonsPanel.getScore(),
-						buttonsPanel.getBonus());
-				gameOver.setVisible(true);
-			}
 
 		}
 
@@ -111,8 +105,7 @@ public class Game extends JComponent {
 				buttonsPanel.restart();
 				board.setLevel(2);
 				board.restart();
-			}
-			else {
+			} else {
 
 				buttonsPanel.getHelp();
 			}

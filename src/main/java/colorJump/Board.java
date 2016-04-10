@@ -119,8 +119,8 @@ public class Board extends JPanel {
 
 	private boolean gameOver() {
 		int count = 0;
-		for (int i = 0; i < pegs.length; i++) {
-			for (int j = 0; j < pegs[0].length; j++) {
+		for (int i = 0; i < ROWS; i++) {
+			for (int j = 0; j < ROWS; j++) {
 				if (pegs[i][j].isEnabled()) {
 					return false;
 				}
