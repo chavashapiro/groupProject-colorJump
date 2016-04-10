@@ -44,7 +44,7 @@ public class Game extends JComponent {
 		help = new JButton("HELP");
 		addListeners();
 		this.buttonsPanel.addButton(help, restartEasy, restartHard);
-		board = this.easyBoard;
+		board = this.hardBoard;
 		add(board, BorderLayout.CENTER);
 		add(this.buttonsPanel, BorderLayout.EAST);
 	}
