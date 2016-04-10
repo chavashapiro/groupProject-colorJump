@@ -30,39 +30,42 @@ public class Game extends JComponent {
 	private EasyBoard easyBoard;
 	private HardBoard hardBoard;
 	private int points;
+
 	@Inject
-	public Game(EasyBoard easyBoard, HardBoard hardBoard, ButtonsPanel buttonsPanel, CheckAlgorithms checker) {
+	public Game(EasyBoard easyBoard, HardBoard hardBoard,
+			ButtonsPanel buttonsPanel, CheckAlgorithms checker) {
 		setBackground(new Color(176, 224, 230));
 		setLayout(new BorderLayout());
-		restartEasy = new JButton("NEW EASY GAME");
-		restartEasy.addMouseListener(mouseListener);
-		restartHard = new JButton("NEW HARD GAME");
-		restartHard.addMouseListener(mouseListener);
-		help= new JButton("HELP");
-		help.addMouseListener(mouseListener);
-		buttonsPanel.addButton(help, restartEasy, restartHard);
 		this.buttonsPanel = buttonsPanel;
 		this.easyBoard = easyBoard;
 		this.hardBoard = hardBoard;
-		this.easyBoard.addListeners(listener, pegMouseListener);
-		this.hardBoard.addListeners(listener, pegMouseListener);
-		board = this.easyBoard;
+		restartEasy = new JButton("NEW EASY GAME");
+		restartHard = new JButton("NEW HARD GAME");
+		help = new JButton("HELP");
+		addListeners();
+		this.buttonsPanel.addButton(help, restartEasy, restartHard);
+		board = this.hardBoard;
 		add(board, BorderLayout.CENTER);
 		add(this.buttonsPanel, BorderLayout.EAST);
+	}
+
+	private void addListeners() {
+		// TODO Auto-generated method stub
+		restartEasy.addMouseListener(mouseListener);
+		restartHard.addMouseListener(mouseListener);
+		help.addMouseListener(mouseListener);
+		easyBoard.addListeners(listener, pegMouseListener);
+		hardBoard.addListeners(listener, pegMouseListener);
 	}
 
 	ActionListener listener = new ActionListener() {
 		public void actionPerformed(final ActionEvent e) {
 			setCursor(new Cursor(Cursor.WAIT_CURSOR));
-			System.out.println("Action listener-wait cursor");
 			// TODO Auto-generated method stub
-
 			Thread thread = new Thread() {
 				public void run() {
 					setCursor(new Cursor(Cursor.WAIT_CURSOR));
-					System.out.println("trying");
 					points = board.pegClicked(e);
-					System.out.println("done checking");
 					setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 				}
 			};
@@ -70,7 +73,6 @@ public class Game extends JComponent {
 
 			System.out.println("Action listener-peg clicked");
 			if (points > 0) {
-				System.out.println("Action listener-add score");
 				buttonsPanel.addScore(points);
 			}
 			System.out.println("Action listener-check if game over");
@@ -82,7 +84,7 @@ public class Game extends JComponent {
 						buttonsPanel.getBonus());
 				gameOver.setVisible(true);
 			}
-			
+
 		}
 
 	};
@@ -90,7 +92,6 @@ public class Game extends JComponent {
 	MouseListener pegMouseListener = new MouseAdapter() {
 		public void mouseClicked(MouseEvent e) {
 			// TODO Auto-generated method stub
-			System.out.println("mouse clicked");
 			if (SwingUtilities.isRightMouseButton(e)) {
 				board.deselectFromPeg();
 				board.enableAllPegs();
@@ -106,23 +107,20 @@ public class Game extends JComponent {
 			b.setBorder(null);
 			if (b == restartEasy) {
 				buttonsPanel.restart();
-				board.restart();
 				board = easyBoard;
 				board.restart();
-				
-			}else if(b==restartHard){
+			} else if (b == restartHard) {
 				buttonsPanel.restart();
-				board.restart();
 				board = hardBoard;
 				board.restart();
-			}
-			
-			else{
+			} else {
 				buttonsPanel.getHelp();
-			}}
+			}
+		}
+
 		public void mouseEntered(MouseEvent e) {
-				JButton b = (JButton) e.getSource();
-				b.setForeground(Color.GRAY);
+			JButton b = (JButton) e.getSource();
+			b.setForeground(Color.GRAY);
 		}
 
 		public void mouseExited(MouseEvent e) {
@@ -133,10 +131,7 @@ public class Game extends JComponent {
 		public void mousePressed(MouseEvent e) {
 			JButton b = (JButton) e.getSource();
 			b.setContentAreaFilled(false);
-		}		
+		}
 	};
-	
-	
-		
 
 }
