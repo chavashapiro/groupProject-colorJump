@@ -40,7 +40,7 @@ public class Board extends JPanel {
 		addPegs();
 		level1 = 1;
 		level2 = 2;
-		level = level1;
+		setLevel(1);
 	}
 
 	private void addPegs() {
