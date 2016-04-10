@@ -26,7 +26,7 @@ public class HelpDialog extends JDialog {
 
 	public HelpDialog() {
 		setResizable(false);
-		setSize(350, 200);
+		setSize(450, 250);
 		setTitle("INSTRUCTIONS");
 		setAlwaysOnTop(true);
 		Container container = getContentPane();
@@ -41,7 +41,10 @@ public class HelpDialog extends JDialog {
 						+ "\u2022  You may jump over one or more balls of the same color,\n"
 						+ "     with a ball of another color.\n"
 						+ "\u2022  Bonus: if you remove all balls but one, score is doubled!\n"
-						+ "\u2022  Right click to clear selection.");
+						+ "\u2022  Right click to clear selection.\n" 
+						+ "\u2022  Easy level: Any ball you jump over will disappear.\n"
+						+ "\u2022  Hard level: You must jump over more than one ball for them to disappear.\n"
+						+ "     Otherwise, it will change to a different color.");
 		setTextArea(text);
 		container.add(title, BorderLayout.NORTH);
 		container.add(text, BorderLayout.CENTER);
