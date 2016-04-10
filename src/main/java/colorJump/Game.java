@@ -27,12 +27,10 @@ public class Game extends JComponent {
 	private JButton help;
 	private ButtonsPanel buttonsPanel;
 	private Board board;
-	private final EasyBoard easyBoard;
-	private final HardBoard hardBoard;
 	private int points;
 
 	@Inject
-	public Game(EasyBoard easyBoard, HardBoard hardBoard,
+	public Game(Board board,
 			ButtonsPanel buttonsPanel, CheckAlgorithms checker) {
 		setBackground(new Color(176, 224, 230));
 		setLayout(new BorderLayout());
@@ -44,11 +42,8 @@ public class Game extends JComponent {
 		help.addMouseListener(mouseListener);
 		buttonsPanel.addButton(help, restartEasy, restartHard);
 		this.buttonsPanel = buttonsPanel;
-		this.easyBoard = easyBoard;
-		this.hardBoard = hardBoard;
-		this.easyBoard.addListeners(listener, pegMouseListener);
-		this.hardBoard.addListeners(listener, pegMouseListener);
-		board = this.easyBoard;
+		this.board = board;
+		this.board.addListeners(listener, pegMouseListener);
 		add(board, BorderLayout.CENTER);
 		add(this.buttonsPanel, BorderLayout.EAST);
 	}
@@ -108,14 +103,11 @@ public class Game extends JComponent {
 			b.setBorder(null);
 			if (b == restartEasy) {
 				buttonsPanel.restart();
+				board.setLevel(1);
 				board.restart();
-				board = easyBoard;
-				board.restart();
-
 			} else if (b == restartHard) {
 				buttonsPanel.restart();
-				board.restart();
-				board = hardBoard;
+				board.setLevel(2);
 				board.restart();
 			}
 
