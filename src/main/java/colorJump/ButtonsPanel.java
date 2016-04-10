@@ -19,7 +19,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 @Singleton
-public class ButtonsPanel extends JPanel{
+public class ButtonsPanel extends JPanel {
 	/**
 	 * 
 	 */
@@ -116,13 +116,14 @@ public class ButtonsPanel extends JPanel{
 		c.setBorder(null);
 		c.setFont(bebasFont);
 	}
+
 	public void getHelp() {
 		helpDialog.setLocationRelativeTo(this);
 		helpDialog.setVisible(true);
 	}
 
-
-	public void addButton( JButton helpButton, JButton easyRestart, JButton hardRestart) {
+	public void addButton(JButton helpButton, JButton easyRestart,
+			JButton hardRestart) {
 		this.easyRestart = easyRestart;
 		formatButton(this.easyRestart);
 		this.hardRestart = hardRestart;
@@ -131,11 +132,10 @@ public class ButtonsPanel extends JPanel{
 		add(scorePanel);
 		add(this.easyRestart);
 		add(this.hardRestart);
-		help=helpButton;
+		help = helpButton;
 		formatButton(help);
 		add(help);
 	}
-
 
 	public void restart() {
 		// TODO Auto-generated method stub4

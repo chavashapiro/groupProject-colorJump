@@ -27,26 +27,23 @@ public class Game extends JComponent {
 	private JButton help;
 	private ButtonsPanel buttonsPanel;
 	private Board board;
-	private EasyBoard easyBoard;
-	private HardBoard hardBoard;
 	private int points;
+
 	@Inject
-	public Game(EasyBoard easyBoard, HardBoard hardBoard, ButtonsPanel buttonsPanel, CheckAlgorithms checker) {
+	public Game(Board board,
+			ButtonsPanel buttonsPanel, CheckAlgorithms checker) {
 		setBackground(new Color(176, 224, 230));
 		setLayout(new BorderLayout());
 		restartEasy = new JButton("NEW EASY GAME");
 		restartEasy.addMouseListener(mouseListener);
 		restartHard = new JButton("NEW HARD GAME");
 		restartHard.addMouseListener(mouseListener);
-		help= new JButton("HELP");
+		help = new JButton("HELP");
 		help.addMouseListener(mouseListener);
 		buttonsPanel.addButton(help, restartEasy, restartHard);
 		this.buttonsPanel = buttonsPanel;
-		this.easyBoard = easyBoard;
-		this.hardBoard = hardBoard;
-		this.easyBoard.addListeners(listener, pegMouseListener);
-		this.hardBoard.addListeners(listener, pegMouseListener);
-		board = this.easyBoard;
+		this.board = board;
+		this.board.addListeners(listener, pegMouseListener);
 		add(board, BorderLayout.CENTER);
 		add(this.buttonsPanel, BorderLayout.EAST);
 	}
@@ -82,7 +79,7 @@ public class Game extends JComponent {
 						buttonsPanel.getBonus());
 				gameOver.setVisible(true);
 			}
-			
+
 		}
 
 	};
@@ -106,23 +103,22 @@ public class Game extends JComponent {
 			b.setBorder(null);
 			if (b == restartEasy) {
 				buttonsPanel.restart();
+				board.setLevel(1);
 				board.restart();
-				board = easyBoard;
-				board.restart();
-				
-			}else if(b==restartHard){
+			} else if (b == restartHard) {
 				buttonsPanel.restart();
-				board.restart();
-				board = hardBoard;
+				board.setLevel(2);
 				board.restart();
 			}
-			
-			else{
+
+			else {
 				buttonsPanel.getHelp();
-			}}
+			}
+		}
+
 		public void mouseEntered(MouseEvent e) {
-				JButton b = (JButton) e.getSource();
-				b.setForeground(Color.GRAY);
+			JButton b = (JButton) e.getSource();
+			b.setForeground(Color.GRAY);
 		}
 
 		public void mouseExited(MouseEvent e) {
@@ -133,10 +129,7 @@ public class Game extends JComponent {
 		public void mousePressed(MouseEvent e) {
 			JButton b = (JButton) e.getSource();
 			b.setContentAreaFilled(false);
-		}		
+		}
 	};
-	
-	
-		
 
 }
