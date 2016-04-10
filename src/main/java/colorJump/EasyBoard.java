@@ -1,6 +1,5 @@
 package colorJump;
 
-
 public class EasyBoard extends Board {
 
 	/**

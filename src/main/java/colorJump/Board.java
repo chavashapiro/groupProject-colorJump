@@ -101,7 +101,9 @@ public abstract class Board extends JPanel {
 			}
 		}
 		setMiddlePeg();
-		deselectFromPeg();
+		if (fromPeg != null) {
+			deselectFromPeg();
+		}
 		bonus = false;
 		enableAllPegs();
 	}
