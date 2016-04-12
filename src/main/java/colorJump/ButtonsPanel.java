@@ -8,6 +8,10 @@ import java.awt.GraphicsEnvironment;
 import java.awt.GridLayout;
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.DecimalFormat;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -35,15 +39,20 @@ public class ButtonsPanel extends JPanel {
 	private HelpDialog helpDialog;
 	private int points;
 	private int bonus;
+	private JLabel gameTimer;
+	private int seconds;
+	private ScheduledExecutorService executor;
+	private DecimalFormat format;
 
 	@Inject
 	public ButtonsPanel(HelpDialog helpDialog) {
-		setLayout(new GridLayout(5, 0));
+		setLayout(new GridLayout(6, 0));
 		setOpaque(false);
 		setPanelSize();
 		this.helpDialog = helpDialog;
 		points = 0;
 		bonus = 0;
+		seconds = 0;
 		setFonts();
 		logo = new JLabel(new ImageIcon(getClass().getResource("/Peg2.png")));
 		scorePanel = new JPanel(new BorderLayout());
@@ -55,7 +64,23 @@ public class ButtonsPanel extends JPanel {
 		formatLabel(scoreLabel);
 		scorePanel.add(scoreLabel, BorderLayout.CENTER);
 		scorePanel.add(scoreNumLabel, BorderLayout.EAST);
+		format = new DecimalFormat("000");
+		gameTimer = new JLabel("000", SwingConstants.CENTER);
+		formatLabel(gameTimer);
+		addTimer();
+		
+	}
 
+	private void addTimer() {
+		// TODO Auto-generated method stub
+		Runnable timer = new Runnable() {
+			public void run() {
+				seconds++;
+				gameTimer.setText(format.format(seconds));
+			}
+		};
+		executor = Executors.newScheduledThreadPool(1);
+		executor.scheduleAtFixedRate(timer, 0, 1, TimeUnit.SECONDS);
 	}
 
 	private void formatLabel(JLabel label) {
@@ -129,6 +154,7 @@ public class ButtonsPanel extends JPanel {
 		this.hardRestart = hardRestart;
 		formatButton(this.hardRestart);
 		add(logo);
+		add(gameTimer);
 		add(scorePanel);
 		add(this.easyRestart);
 		add(this.hardRestart);
@@ -141,7 +167,12 @@ public class ButtonsPanel extends JPanel {
 		// TODO Auto-generated method stub4
 		points = 0;
 		bonus = 0;
+		seconds=0;
 		setScore();
+	}
+
+	public int getSeconds() {
+		return seconds;
 	}
 
 	public void addScore(int points) {
@@ -152,5 +183,10 @@ public class ButtonsPanel extends JPanel {
 
 	public void setScore() {
 		scoreNumLabel.setText(String.valueOf(points));
+	}
+
+	public void pauseTimer() {
+		// TODO Auto-generated method stub
+		executor.shutdown();
 	}
 }

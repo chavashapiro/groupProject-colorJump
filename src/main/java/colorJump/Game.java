@@ -64,12 +64,13 @@ public class Game extends JComponent {
 						buttonsPanel.addScore(points);
 					}
 					if (board.isGameOver()) {
+						buttonsPanel.pauseTimer();
 						if (board.isBonus()) {
 							buttonsPanel.setBonus();
 						}
 						GameOver gameOver = new GameOver(
 								buttonsPanel.getScore(),
-								buttonsPanel.getBonus());
+								buttonsPanel.getBonus(), buttonsPanel.getSeconds());
 						gameOver.setVisible(true);
 					}
 					setCursor(new Cursor(Cursor.DEFAULT_CURSOR));

@@ -25,10 +25,10 @@ public class GameOver extends JFrame {
 	 */
 	private static final long serialVersionUID = 1L;
 	private int scoreNum, bonusNum, totalNum;
-	private JLabel score, bonus, total, gameOver, scoreLbl, bonusLbl, totalLbl;
+	private JLabel score, bonus, total,seconds, secondsLbl, gameOver, scoreLbl, bonusLbl, totalLbl;
 	private JButton ok;
 
-	public GameOver(int gameScore, int gameBonus) {
+	public GameOver(int gameScore, int gameBonus, int gameSeconds) {
 		setTitle("");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(650, 450);
@@ -55,11 +55,13 @@ public class GameOver extends JFrame {
 
 		JPanel scorePanel = new JPanel();
 		scorePanel.setOpaque(false);
-		scorePanel.setLayout(new GridLayout(3, 2));
+		scorePanel.setLayout(new GridLayout(4, 2));
 		scorePanel.setBorder(new EmptyBorder(25, 100, 25, 100));
 		score = new JLabel(String.valueOf(gameScore), SwingConstants.RIGHT);
 		bonus = new JLabel(String.valueOf(gameBonus), SwingConstants.RIGHT);
 		total = new JLabel(String.valueOf(totalNum), SwingConstants.RIGHT);
+		seconds= new JLabel(String.valueOf(gameSeconds), SwingConstants.RIGHT);
+		secondsLbl= new JLabel("Seconds:");
 		scoreLbl = new JLabel("Score:");
 		bonusLbl = new JLabel("Bonus:");
 		totalLbl = new JLabel("Total:");
@@ -70,11 +72,14 @@ public class GameOver extends JFrame {
 		setFont(bonusLbl);
 		setFont(totalLbl);
 		setFont(total);
-
+setFont(seconds);
+setFont(secondsLbl);
 		scorePanel.add(scoreLbl);
 		scorePanel.add(score);
 		scorePanel.add(bonusLbl);
 		scorePanel.add(bonus);
+		scorePanel.add(secondsLbl);
+		scorePanel.add(seconds);
 		scorePanel.add(totalLbl);
 		scorePanel.add(total);
 
