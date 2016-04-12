@@ -79,6 +79,7 @@ public class Game extends JComponent {
 						gameOver.setScoreTime(buttonsPanel.getScore(), buttonsPanel.getSeconds());				
 						gameOver.setVisible(true);
 						board.setGameOver(false);
+						board.restart();
 					}
 					setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 				}
