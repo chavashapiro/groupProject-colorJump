@@ -18,6 +18,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
+import javax.inject.Singleton;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -25,19 +26,19 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
-
+@Singleton
 public class GameOver extends JFrame {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private int scoreNum, bonusNum, totalNum, highScore, secondsNum;
-	private JLabel score, bonus, total, seconds, secondsLbl, gameOver,
-			scoreLbl, bonusLbl, totalLbl, highScoreLbl, highScoreValueLbl;
+	private int scoreNum,  highScore, secondsNum;
+	private JLabel score,   seconds, secondsLbl, gameOver,
+			scoreLbl,  highScoreLbl, highScoreValueLbl;
 	private JButton ok;
 	private JPanel scorePanel;
 
-	public GameOver(int gameScore, int gameBonus, int gameSeconds)
+	public GameOver()
 			throws FileNotFoundException, ClassNotFoundException, IOException {
 		setTitle("");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -49,10 +50,8 @@ public class GameOver extends JFrame {
 		container.setBackground(new Color(176, 224, 230));
 		highScore = 0;
 		getSavedHighScore();
-		scoreNum = gameScore;
-		bonusNum = gameBonus;
-		secondsNum = gameSeconds;
-		totalNum = scoreNum + bonusNum;
+		scoreNum = 0;
+		secondsNum = 0;
 		JPanel title = new JPanel();
 		title.setOpaque(false);
 		title.setLayout(new GridBagLayout());
@@ -64,7 +63,7 @@ public class GameOver extends JFrame {
 		title.add(gameOver);
 		scorePanel = new JPanel();
 		scorePanel.setOpaque(false);
-		scorePanel.setLayout(new GridLayout(5, 2));
+		scorePanel.setLayout(new GridLayout(3, 2));
 		scorePanel.setBorder(new EmptyBorder(25, 100, 25, 100));
 		instantiateLabels();
 
@@ -95,19 +94,21 @@ public class GameOver extends JFrame {
 			e.printStackTrace();
 		}
 	}
+	public void setScoreTime(int gameScore, int gameSeconds){
+		scoreNum = gameScore;
+		secondsNum = gameSeconds;
+		score.setText(String.valueOf(scoreNum));
+		seconds.setText(String.valueOf(secondsNum));
+	}
 
 	private void instantiateLabels() {
 		// TODO Auto-generated method stub
 		score = new JLabel(String.valueOf(scoreNum), SwingConstants.RIGHT);
-		bonus = new JLabel(String.valueOf(bonusNum), SwingConstants.RIGHT);
-		total = new JLabel(String.valueOf(totalNum), SwingConstants.RIGHT);
 		seconds = new JLabel(String.valueOf(secondsNum), SwingConstants.RIGHT);
 		highScoreValueLbl = new JLabel(String.valueOf(highScore),
 				SwingConstants.RIGHT);
 		secondsLbl = new JLabel("Seconds:");
 		scoreLbl = new JLabel("Score:");
-		bonusLbl = new JLabel("Bonus:");
-		totalLbl = new JLabel("Total:");
 		highScoreLbl = new JLabel("High Score:");
 	}
 
@@ -115,24 +116,16 @@ public class GameOver extends JFrame {
 		// TODO Auto-generated method stub
 		scorePanel.add(scoreLbl);
 		scorePanel.add(score);
-		scorePanel.add(bonusLbl);
-		scorePanel.add(bonus);
 		scorePanel.add(secondsLbl);
 		scorePanel.add(seconds);
 		scorePanel.add(highScoreLbl);
 		scorePanel.add(highScoreValueLbl);
-		scorePanel.add(totalLbl);
-		scorePanel.add(total);
 	}
 
 	private void setFonts() {
 		// TODO Auto-generated method stub
 		setFont(score);
 		setFont(scoreLbl);
-		setFont(bonus);
-		setFont(bonusLbl);
-		setFont(totalLbl);
-		setFont(total);
 		setFont(seconds);
 		setFont(secondsLbl);
 		setFont(highScoreLbl);

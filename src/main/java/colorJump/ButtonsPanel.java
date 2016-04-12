@@ -139,6 +139,7 @@ public class ButtonsPanel extends JPanel {
 
 	public void setBonus() {
 		this.bonus += points * 2;
+		points *=2;
 	}
 
 	public void removeDecor(JComponent c) {
