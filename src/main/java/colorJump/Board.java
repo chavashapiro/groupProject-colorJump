@@ -44,7 +44,6 @@ public class Board extends JPanel {
 	}
 
 	private void addPegs() {
-		// TODO Auto-generated method stub
 		for (int i = 0; i < pegs.length; i++) {
 			for (int j = 0; j < pegs[i].length; j++) {
 				pegs[i][j] = new Peg(getValue(), i, j);
@@ -57,7 +56,6 @@ public class Board extends JPanel {
 	}
 
 	private void setMiddlePeg() {
-		// TODO Auto-generated method stub
 		int middle = ROWS / 2;
 		pegs[middle][middle].setOpaque(false);
 		pegs[middle][middle].setColor(0);
@@ -73,7 +71,6 @@ public class Board extends JPanel {
 	}
 
 	private void checkEnablePeg(int i, int j) {
-		// TODO Auto-generated method stub
 		if (isEnabled(i, j)) {
 			enablePeg(i, j);
 		} else {
@@ -82,7 +79,6 @@ public class Board extends JPanel {
 	}
 
 	private void disablePeg(int i, int j) {
-		// TODO Auto-generated method stub
 		pegs[i][j].setEnabled(false);
 		pegs[i][j].setCursor(Cursor.getDefaultCursor());
 	}
@@ -421,7 +417,6 @@ public class Board extends JPanel {
 	}
 
 	public int pegClicked(ActionEvent event) {
-		// TODO Auto-generated method stub
 		int points = 0;
 		if (fromPeg == null) {
 			fromPeg = (Peg) event.getSource();
@@ -472,7 +467,6 @@ public class Board extends JPanel {
 	}
 
 	public int setMoveScore(int spaces) {
-		// TODO Auto-generated method stub
 		int score = 0;
 		switch (spaces - 1) {
 		case 1:
@@ -499,7 +493,6 @@ public class Board extends JPanel {
 	}
 
 	public void addListeners(ActionListener listener, MouseListener mouseListener) {
-		// TODO Auto-generated method stub
 		for (int i = 0; i < pegs.length; i++) {
 			for (int j = 0; j < pegs[i].length; j++) {
 				pegs[i][j].addActionListener(listener);

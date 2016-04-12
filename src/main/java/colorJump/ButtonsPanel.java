@@ -77,7 +77,6 @@ public class ButtonsPanel extends JPanel {
 	}
 
 	private void addTimer() {
-		// TODO Auto-generated method stub
 		Runnable timer = new Runnable() {
 			public void run() {
 				seconds++;
@@ -89,13 +88,11 @@ public class ButtonsPanel extends JPanel {
 	}
 
 	private void formatLabel(JLabel label) {
-		// TODO Auto-generated method stub
 		label.setFont(bebasFont);
 		removeDecor(label);
 	}
 
 	private void formatButton(JButton button) {
-		// TODO Auto-generated method stub
 		button.setFont(bebasFont);
 		button.setContentAreaFilled(false);
 		removeDecor(button);
@@ -103,7 +100,6 @@ public class ButtonsPanel extends JPanel {
 	}
 
 	private void setFonts() {
-		// TODO Auto-generated method stub
 		try {
 			GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
 
@@ -120,7 +116,6 @@ public class ButtonsPanel extends JPanel {
 	}
 
 	private void setPanelSize() {
-		// TODO Auto-generated method stub
 		Dimension d = new Dimension(200, 650);
 		this.setPreferredSize(d);
 		this.setMaximumSize(d);
@@ -169,7 +164,6 @@ public class ButtonsPanel extends JPanel {
 	}
 
 	public void restart() {
-		// TODO Auto-generated method stub4
 		points = 0;
 		bonus = 0;
 		seconds = 0;
@@ -181,7 +175,6 @@ public class ButtonsPanel extends JPanel {
 	}
 
 	public void addScore(int points) {
-		// TODO Auto-generated method stub
 		this.points += points;
 		setScore();
 	}
@@ -191,7 +184,6 @@ public class ButtonsPanel extends JPanel {
 	}
 
 	public void pauseTimer() {
-		// TODO Auto-generated method stub
 		executor.shutdown();
 	}
 }

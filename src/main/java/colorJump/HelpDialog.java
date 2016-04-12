@@ -51,14 +51,12 @@ public class HelpDialog extends JDialog {
 	}
 
 	private void setTextArea(JTextArea text) {
-		// TODO Auto-generated method stub
 		text.setBorder(new EmptyBorder(0, 15, 0, 0));
 		text.setEditable(false);
 		text.setOpaque(false);
 	}
 
 	private void setFrameTitle(JLabel title) {
-		// TODO Auto-generated method stub
 		title.setBorder(new EmptyBorder(0, 15, 0, 0));
 		title.setFont(pristinaFont);
 		title.setOpaque(false);
@@ -66,7 +64,6 @@ public class HelpDialog extends JDialog {
 	}
 
 	private void setFonts() {
-		// TODO Auto-generated method stub
 		try {
 
 			GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();

@@ -40,7 +40,7 @@ public class GameOver extends JFrame {
 
 	public GameOver() throws FileNotFoundException, ClassNotFoundException, IOException {
 		setTitle("");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setSize(650, 450);
 		setLayout(new BorderLayout());
 		// setLocationRelativeTo(gameFrame);
@@ -85,10 +85,8 @@ public class GameOver extends JFrame {
 		try {
 			saveScore();
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -101,7 +99,6 @@ public class GameOver extends JFrame {
 	}
 
 	private void instantiateLabels() {
-		// TODO Auto-generated method stub
 		score = new JLabel(String.valueOf(scoreNum), SwingConstants.RIGHT);
 		seconds = new JLabel(String.valueOf(secondsNum), SwingConstants.RIGHT);
 		highScoreValueLbl = new JLabel(String.valueOf(highScore), SwingConstants.RIGHT);
@@ -111,7 +108,6 @@ public class GameOver extends JFrame {
 	}
 
 	private void addScorePanelLabels() {
-		// TODO Auto-generated method stub
 		scorePanel.add(scoreLbl);
 		scorePanel.add(score);
 		scorePanel.add(secondsLbl);
@@ -121,7 +117,6 @@ public class GameOver extends JFrame {
 	}
 
 	private void setFonts() {
-		// TODO Auto-generated method stub
 		setFont(score);
 		setFont(scoreLbl);
 		setFont(seconds);
@@ -152,7 +147,6 @@ public class GameOver extends JFrame {
 
 	public void saveScore() throws FileNotFoundException, IOException {
 		if (scoreNum > highScore) {
-			// TODO Auto-generated method stub
 			ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream("HighScore.ser"));
 			output.writeObject(scoreNum);
 			output.close();
