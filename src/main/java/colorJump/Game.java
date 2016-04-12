@@ -8,8 +8,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -31,6 +29,8 @@ public class Game extends JComponent {
 	private ButtonsPanel buttonsPanel;
 	private Board board;
 	private int points;
+	private final int level1;
+	private final int level2;
 	private GameOver gameOver;
 
 	@Inject
@@ -42,17 +42,17 @@ public class Game extends JComponent {
 		leftArrow = new JButton("< ");
 		help = new JButton("HELP");
 		this.board = board;
-		this.gameOver=gameOver;
+		this.gameOver = gameOver;
 		addListeners();
-		buttonsPanel.addButton(help, restartEasy, rightArrow,
-				leftArrow);
+		buttonsPanel.addButton(help, restartEasy, rightArrow, leftArrow);
 		this.buttonsPanel = buttonsPanel;
 		add(board, BorderLayout.CENTER);
 		add(this.buttonsPanel, BorderLayout.EAST);
+		level1 = 1;
+		level2 = 2;
 	}
 
 	private void addListeners() {
-		// TODO Auto-generated method stub
 		restartEasy.addMouseListener(mouseListener);
 		rightArrow.addMouseListener(mouseListener);
 		leftArrow.addMouseListener(mouseListener);
@@ -63,7 +63,6 @@ public class Game extends JComponent {
 	ActionListener listener = new ActionListener() {
 		public void actionPerformed(final ActionEvent e) {
 			setCursor(new Cursor(Cursor.WAIT_CURSOR));
-			// TODO Auto-generated method stub
 			Thread thread = new Thread() {
 				public void run() {
 					setCursor(new Cursor(Cursor.WAIT_CURSOR));
@@ -76,7 +75,7 @@ public class Game extends JComponent {
 						if (board.isBonus()) {
 							buttonsPanel.setBonus();
 						}
-						gameOver.setScoreTime(buttonsPanel.getScore(), buttonsPanel.getSeconds());				
+						gameOver.setScoreTime(buttonsPanel.getScore(), buttonsPanel.getSeconds());
 						gameOver.setVisible(true);
 						board.setGameOver(false);
 						board.restart();
@@ -92,7 +91,6 @@ public class Game extends JComponent {
 
 	MouseListener pegMouseListener = new MouseAdapter() {
 		public void mouseClicked(MouseEvent e) {
-			// TODO Auto-generated method stub
 			if (SwingUtilities.isRightMouseButton(e)) {
 				board.deselectFromPeg();
 				board.enableAllPegs();
@@ -106,26 +104,24 @@ public class Game extends JComponent {
 			b.setBorderPainted(false);
 			b.setContentAreaFilled(false);
 			b.setBorder(null);
-			// if (b == restartEasy) {
 			if (b.getText() == "NEW EASY GAME") {
 				buttonsPanel.restart();
-				board.setLevel(1);
+				board.setLevel(level1);
 				board.restart();
-				// } else if (b == restartHard) {
 			} else if (b.getText() == "NEW HARD GAME") {
 				buttonsPanel.restart();
-				board.setLevel(2);
+				board.setLevel(level2);
 				board.restart();
 			} else if (b == help) {
 				buttonsPanel.getHelp();
-			}else if(b==rightArrow || b==leftArrow){
-				if(restartEasy.getText()=="NEW EASY GAME"){
+			} else if (b == rightArrow || b == leftArrow) {
+				if (restartEasy.getText() == "NEW EASY GAME") {
 					restartEasy.setText("NEW HARD GAME");
-				}else{
+				} else {
 					restartEasy.setText("NEW EASY GAME");
 				}
-				}
 			}
+		}
 
 		public void mouseEntered(MouseEvent e) {
 			JButton b = (JButton) e.getSource();

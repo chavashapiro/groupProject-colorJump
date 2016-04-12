@@ -26,22 +26,21 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
+
 @Singleton
 public class GameOver extends JFrame {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private int scoreNum,  highScore, secondsNum;
-	private JLabel score,   seconds, secondsLbl, gameOver,
-			scoreLbl,  highScoreLbl, highScoreValueLbl;
+	private int scoreNum, highScore, secondsNum;
+	private JLabel score, seconds, secondsLbl, gameOver, scoreLbl, highScoreLbl, highScoreValueLbl;
 	private JButton ok;
 	private JPanel scorePanel;
 
-	public GameOver()
-			throws FileNotFoundException, ClassNotFoundException, IOException {
+	public GameOver() throws FileNotFoundException, ClassNotFoundException, IOException {
 		setTitle("");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setSize(650, 450);
 		setLayout(new BorderLayout());
 		// setLocationRelativeTo(gameFrame);
@@ -56,8 +55,7 @@ public class GameOver extends JFrame {
 		title.setOpaque(false);
 		title.setLayout(new GridBagLayout());
 		title.setPreferredSize(new Dimension(this.getWidth(), 150));
-		gameOver = new JLabel(new ImageIcon(getClass().getResource(
-				"/game_over.png")));
+		gameOver = new JLabel(new ImageIcon(getClass().getResource("/game_over.png")));
 		gameOver.setHorizontalAlignment(JLabel.CENTER);
 		gameOver.setVerticalAlignment(JLabel.CENTER);
 		title.add(gameOver);
@@ -87,14 +85,13 @@ public class GameOver extends JFrame {
 		try {
 			saveScore();
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-	public void setScoreTime(int gameScore, int gameSeconds){
+
+	public void setScoreTime(int gameScore, int gameSeconds) {
 		scoreNum = gameScore;
 		secondsNum = gameSeconds;
 		score.setText(String.valueOf(scoreNum));
@@ -102,18 +99,15 @@ public class GameOver extends JFrame {
 	}
 
 	private void instantiateLabels() {
-		// TODO Auto-generated method stub
 		score = new JLabel(String.valueOf(scoreNum), SwingConstants.RIGHT);
 		seconds = new JLabel(String.valueOf(secondsNum), SwingConstants.RIGHT);
-		highScoreValueLbl = new JLabel(String.valueOf(highScore),
-				SwingConstants.RIGHT);
+		highScoreValueLbl = new JLabel(String.valueOf(highScore), SwingConstants.RIGHT);
 		secondsLbl = new JLabel("Seconds:");
 		scoreLbl = new JLabel("Score:");
 		highScoreLbl = new JLabel("High Score:");
 	}
 
 	private void addScorePanelLabels() {
-		// TODO Auto-generated method stub
 		scorePanel.add(scoreLbl);
 		scorePanel.add(score);
 		scorePanel.add(secondsLbl);
@@ -123,7 +117,6 @@ public class GameOver extends JFrame {
 	}
 
 	private void setFonts() {
-		// TODO Auto-generated method stub
 		setFont(score);
 		setFont(scoreLbl);
 		setFont(seconds);
@@ -154,18 +147,14 @@ public class GameOver extends JFrame {
 
 	public void saveScore() throws FileNotFoundException, IOException {
 		if (scoreNum > highScore) {
-			// TODO Auto-generated method stub
-			ObjectOutputStream output = new ObjectOutputStream(
-					new FileOutputStream("HighScore.ser"));
+			ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream("HighScore.ser"));
 			output.writeObject(scoreNum);
 			output.close();
 		}
 	}
 
-	private void getSavedHighScore() throws FileNotFoundException, IOException,
-			ClassNotFoundException {
-		ObjectInputStream input = new ObjectInputStream(new FileInputStream(
-				"HighScore.ser"));
+	private void getSavedHighScore() throws FileNotFoundException, IOException, ClassNotFoundException {
+		ObjectInputStream input = new ObjectInputStream(new FileInputStream("HighScore.ser"));
 
 		highScore = (Integer) input.readObject();
 		input.close();

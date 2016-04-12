@@ -77,7 +77,6 @@ public class ButtonsPanel extends JPanel {
 	}
 
 	private void addTimer() {
-		// TODO Auto-generated method stub
 		Runnable timer = new Runnable() {
 			public void run() {
 				seconds++;
@@ -89,13 +88,11 @@ public class ButtonsPanel extends JPanel {
 	}
 
 	private void formatLabel(JLabel label) {
-		// TODO Auto-generated method stub
 		label.setFont(bebasFont);
 		removeDecor(label);
 	}
 
 	private void formatButton(JButton button) {
-		// TODO Auto-generated method stub
 		button.setFont(bebasFont);
 		button.setContentAreaFilled(false);
 		removeDecor(button);
@@ -103,13 +100,10 @@ public class ButtonsPanel extends JPanel {
 	}
 
 	private void setFonts() {
-		// TODO Auto-generated method stub
 		try {
-			GraphicsEnvironment ge = GraphicsEnvironment
-					.getLocalGraphicsEnvironment();
+			GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
 
-			InputStream in = getClass().getResource("/BEBAS__.TTF")
-					.openStream();
+			InputStream in = getClass().getResource("/BEBAS__.TTF").openStream();
 			bebasFont = Font.createFont(Font.TRUETYPE_FONT, in).deriveFont(20f);
 
 			ge.registerFont(bebasFont);
@@ -122,7 +116,6 @@ public class ButtonsPanel extends JPanel {
 	}
 
 	private void setPanelSize() {
-		// TODO Auto-generated method stub
 		Dimension d = new Dimension(200, 650);
 		this.setPreferredSize(d);
 		this.setMaximumSize(d);
@@ -139,7 +132,7 @@ public class ButtonsPanel extends JPanel {
 
 	public void setBonus() {
 		this.bonus += points * 2;
-		points *=2;
+		points *= 2;
 	}
 
 	public void removeDecor(JComponent c) {
@@ -153,8 +146,7 @@ public class ButtonsPanel extends JPanel {
 		helpDialog.setVisible(true);
 	}
 
-	public void addButton(JButton helpButton, JButton easyRestart,
-			JButton rightArrow, JButton leftArrow) {
+	public void addButton(JButton helpButton, JButton easyRestart, JButton rightArrow, JButton leftArrow) {
 		formatButton(rightArrow);
 		formatButton(leftArrow);
 		this.easyRestart = easyRestart;
@@ -172,7 +164,6 @@ public class ButtonsPanel extends JPanel {
 	}
 
 	public void restart() {
-		// TODO Auto-generated method stub4
 		points = 0;
 		bonus = 0;
 		seconds = 0;
@@ -184,7 +175,6 @@ public class ButtonsPanel extends JPanel {
 	}
 
 	public void addScore(int points) {
-		// TODO Auto-generated method stub
 		this.points += points;
 		setScore();
 	}
@@ -194,7 +184,6 @@ public class ButtonsPanel extends JPanel {
 	}
 
 	public void pauseTimer() {
-		// TODO Auto-generated method stub
 		executor.shutdown();
 	}
 }
