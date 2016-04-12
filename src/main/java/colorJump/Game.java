@@ -8,6 +8,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -68,9 +70,21 @@ public class Game extends JComponent {
 						if (board.isBonus()) {
 							buttonsPanel.setBonus();
 						}
-						GameOver gameOver = new GameOver(
-								buttonsPanel.getScore(),
-								buttonsPanel.getBonus(), buttonsPanel.getSeconds());
+						GameOver gameOver=null;
+						try {
+							gameOver = new GameOver(
+									buttonsPanel.getScore(),
+									buttonsPanel.getBonus(), buttonsPanel.getSeconds());
+						} catch (FileNotFoundException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						} catch (ClassNotFoundException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						} catch (IOException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
 						gameOver.setVisible(true);
 					}
 					setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
