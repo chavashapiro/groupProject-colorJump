@@ -146,8 +146,7 @@ public class Board extends JPanel {
 		if (pegs[x][y].getPegColor() == 0) {
 			return false;
 		}
-		return (checkRight(x, y) || checkLeft(x, y) || checkUp(x, y) || checkDown(
-				x, y));
+		return (checkRight(x, y) || checkLeft(x, y) || checkUp(x, y) || checkDown(x, y));
 	}
 
 	protected void setOpenSpots(int x, int y) {
@@ -160,12 +159,9 @@ public class Board extends JPanel {
 	private boolean checkOpenDown(int x, int y) {
 		int currColor = pegs[x][y].getPegColor();
 		int jumpOverColor;
-		if (x + 1 < pegs.length
-				&& currColor != (jumpOverColor = pegs[x + 1][y].getPegColor())
-				&& jumpOverColor != 0) {
+		if (x + 1 < pegs.length && currColor != (jumpOverColor = pegs[x + 1][y].getPegColor()) && jumpOverColor != 0) {
 			while (x + 1 < pegs.length
-					&& (jumpOverColor == pegs[x + 1][y].getPegColor() || pegs[x + 1][y]
-							.getPegColor() == 0)) {
+					&& (jumpOverColor == pegs[x + 1][y].getPegColor() || pegs[x + 1][y].getPegColor() == 0)) {
 				x++;
 				if (pegs[x][y].getPegColor() == 0) {
 
@@ -182,12 +178,9 @@ public class Board extends JPanel {
 	private boolean checkOpenRight(int x, int y) {
 		int currColor = pegs[x][y].getPegColor();
 		int jumpOverColor;
-		if (y + 1 < pegs[0].length
-				&& currColor != (jumpOverColor = pegs[x][y + 1].getPegColor())
-				&& jumpOverColor != 0) {
+		if (y + 1 < pegs[0].length && currColor != (jumpOverColor = pegs[x][y + 1].getPegColor()) && jumpOverColor != 0) {
 			while (y + 1 < pegs[0].length
-					&& (jumpOverColor == pegs[x][y + 1].getPegColor() || pegs[x][y + 1]
-							.getPegColor() == 0)) {
+					&& (jumpOverColor == pegs[x][y + 1].getPegColor() || pegs[x][y + 1].getPegColor() == 0)) {
 				y++;
 				if (pegs[x][y].getPegColor() == 0) {
 
@@ -204,12 +197,8 @@ public class Board extends JPanel {
 	private boolean checkOpenLeft(int x, int y) {
 		int currColor = pegs[x][y].getPegColor();
 		int jumpOverColor;
-		if (y > 0
-				&& currColor != (jumpOverColor = pegs[x][y - 1].getPegColor())
-				&& jumpOverColor != 0) {
-			while (y > 0
-					&& (jumpOverColor == pegs[x][y - 1].getPegColor() || pegs[x][y - 1]
-							.getPegColor() == 0)) {
+		if (y > 0 && currColor != (jumpOverColor = pegs[x][y - 1].getPegColor()) && jumpOverColor != 0) {
+			while (y > 0 && (jumpOverColor == pegs[x][y - 1].getPegColor() || pegs[x][y - 1].getPegColor() == 0)) {
 				y--;
 				if (pegs[x][y].getPegColor() == 0) {
 
@@ -226,12 +215,8 @@ public class Board extends JPanel {
 	private boolean checkOpenUp(int x, int y) {
 		int currColor = pegs[x][y].getPegColor();
 		int jumpOverColor;
-		if (x > 0
-				&& currColor != (jumpOverColor = pegs[x - 1][y].getPegColor())
-				&& jumpOverColor != 0) {
-			while (x > 0
-					&& (jumpOverColor == pegs[x - 1][y].getPegColor() || pegs[x - 1][y]
-							.getPegColor() == 0)) {
+		if (x > 0 && currColor != (jumpOverColor = pegs[x - 1][y].getPegColor()) && jumpOverColor != 0) {
+			while (x > 0 && (jumpOverColor == pegs[x - 1][y].getPegColor() || pegs[x - 1][y].getPegColor() == 0)) {
 				x--;
 				if (pegs[x][y].getPegColor() == 0) {
 
@@ -392,11 +377,8 @@ public class Board extends JPanel {
 		if (fromX == toX) {
 			int spots = Math.abs(fromY - toY);
 			if (spots == 2) { // only skipped over 1
-				if (fromY > toY) {
-					pegs[fromX][fromY - 1].setColor(getValue());
-				} else {
-					pegs[fromX][toY - 1].setColor(getValue());
-				}
+				int maxY = Math.max(fromY, toY);
+				pegs[fromX][maxY - 1].setColor(getValue());
 			} else { // more than one skipped over
 				// left
 				if (fromY > toY) {
@@ -414,11 +396,8 @@ public class Board extends JPanel {
 		} else { // Y's are the same
 			int spots = Math.abs(fromX - toX);
 			if (spots == 2) { // only skipped over 1
-				if (fromX > toX) {
-					pegs[fromX - 1][fromY].setColor(getValue());
-				} else {
-					pegs[toX - 1][fromY].setColor(getValue());
-				}
+				int maxX = Math.max(fromX, toX);
+				pegs[maxX - 1][fromY].setColor(getValue());
 			} else { // more than one skipped over
 				// up
 				if (fromX > toX) {
@@ -519,8 +498,7 @@ public class Board extends JPanel {
 		return gameOver;
 	}
 
-	public void addListeners(ActionListener listener,
-			MouseListener mouseListener) {
+	public void addListeners(ActionListener listener, MouseListener mouseListener) {
 		// TODO Auto-generated method stub
 		for (int i = 0; i < pegs.length; i++) {
 			for (int j = 0; j < pegs[i].length; j++) {

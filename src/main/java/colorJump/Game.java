@@ -8,8 +8,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -42,10 +40,9 @@ public class Game extends JComponent {
 		leftArrow = new JButton("< ");
 		help = new JButton("HELP");
 		this.board = board;
-		this.gameOver=gameOver;
+		this.gameOver = gameOver;
 		addListeners();
-		buttonsPanel.addButton(help, restartEasy, rightArrow,
-				leftArrow);
+		buttonsPanel.addButton(help, restartEasy, rightArrow, leftArrow);
 		this.buttonsPanel = buttonsPanel;
 		add(board, BorderLayout.CENTER);
 		add(this.buttonsPanel, BorderLayout.EAST);
@@ -76,7 +73,7 @@ public class Game extends JComponent {
 						if (board.isBonus()) {
 							buttonsPanel.setBonus();
 						}
-						gameOver.setScoreTime(buttonsPanel.getScore(), buttonsPanel.getSeconds());				
+						gameOver.setScoreTime(buttonsPanel.getScore(), buttonsPanel.getSeconds());
 						gameOver.setVisible(true);
 						board.setGameOver(false);
 						board.restart();
@@ -118,14 +115,14 @@ public class Game extends JComponent {
 				board.restart();
 			} else if (b == help) {
 				buttonsPanel.getHelp();
-			}else if(b==rightArrow || b==leftArrow){
-				if(restartEasy.getText()=="NEW EASY GAME"){
+			} else if (b == rightArrow || b == leftArrow) {
+				if (restartEasy.getText() == "NEW EASY GAME") {
 					restartEasy.setText("NEW HARD GAME");
-				}else{
+				} else {
 					restartEasy.setText("NEW EASY GAME");
 				}
-				}
 			}
+		}
 
 		public void mouseEntered(MouseEvent e) {
 			JButton b = (JButton) e.getSource();

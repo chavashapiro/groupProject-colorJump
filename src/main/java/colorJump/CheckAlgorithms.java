@@ -4,8 +4,8 @@ import javax.inject.Inject;
 
 public class CheckAlgorithms {
 	@Inject
-	public CheckAlgorithms(){
-		
+	public CheckAlgorithms() {
+
 	}
 
 }
