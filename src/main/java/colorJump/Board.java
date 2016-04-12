@@ -445,20 +445,28 @@ public class Board extends JPanel {
 		toPeg.setColor(fromPeg.getPegColor());
 		fromPeg.setColor(0);
 		fromPeg.repaint();
+
 		if (level == level1) {
 			removeSpotsEasy();
 		} else {
 			removeSpotsHard();
 		}
+
 		int spaces;
 		int peg1X = fromPeg.getXLocation();
 		int peg2X = toPeg.getXLocation();
+
 		if (peg1X == peg2X) {
 			spaces = Math.abs(fromPeg.getYLocation() - toPeg.getYLocation());
 		} else {
 			spaces = Math.abs(peg1X - peg2X);
 		}
-		return setMoveScore(spaces);
+
+		if (level == level1) {
+			return setMoveScoreEasy(spaces);
+		} else {
+			return setMoveScoreHard(spaces);
+		}
 
 	}
 
@@ -466,7 +474,7 @@ public class Board extends JPanel {
 		this.gameOver = gameOver;
 	}
 
-	public int setMoveScore(int spaces) {
+	public int setMoveScoreEasy(int spaces) {
 		int score = 0;
 		switch (spaces - 1) {
 		case 1:
@@ -485,6 +493,16 @@ public class Board extends JPanel {
 			score = 700;
 			break;
 		}
+		return score;
+	}
+
+	private int setMoveScoreHard(int spaces) {
+		int score = 0;
+
+		if (spaces - 1 > 1) {
+			score = 10 * (int) Math.pow(spaces - 1, 3);
+		}
+
 		return score;
 	}
 
