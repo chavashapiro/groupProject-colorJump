@@ -488,6 +488,10 @@ public class Board extends JPanel {
 
 	}
 
+	public void setGameOver(boolean gameOver) {
+		this.gameOver = gameOver;
+	}
+
 	public int setMoveScore(int spaces) {
 		// TODO Auto-generated method stub
 		int score = 0;

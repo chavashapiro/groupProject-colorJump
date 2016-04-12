@@ -31,9 +31,10 @@ public class Game extends JComponent {
 	private ButtonsPanel buttonsPanel;
 	private Board board;
 	private int points;
+	private GameOver gameOver;
 
 	@Inject
-	public Game(Board board, ButtonsPanel buttonsPanel, CheckAlgorithms checker) {
+	public Game(Board board, ButtonsPanel buttonsPanel, CheckAlgorithms checker, GameOver gameOver) {
 		setBackground(new Color(176, 224, 230));
 		setLayout(new BorderLayout());
 		restartEasy = new JButton("NEW EASY GAME");
@@ -41,6 +42,7 @@ public class Game extends JComponent {
 		leftArrow = new JButton("< ");
 		help = new JButton("HELP");
 		this.board = board;
+		this.gameOver=gameOver;
 		addListeners();
 		buttonsPanel.addButton(help, restartEasy, rightArrow,
 				leftArrow);
@@ -74,22 +76,10 @@ public class Game extends JComponent {
 						if (board.isBonus()) {
 							buttonsPanel.setBonus();
 						}
-						GameOver gameOver = null;
-						try {
-							gameOver = new GameOver(buttonsPanel.getScore(),
-									buttonsPanel.getBonus(),
-									buttonsPanel.getSeconds());
-						} catch (FileNotFoundException e1) {
-							// TODO Auto-generated catch block
-							e1.printStackTrace();
-						} catch (ClassNotFoundException e1) {
-							// TODO Auto-generated catch block
-							e1.printStackTrace();
-						} catch (IOException e1) {
-							// TODO Auto-generated catch block
-							e1.printStackTrace();
-						}
+						gameOver.setScoreTime(buttonsPanel.getScore(), buttonsPanel.getSeconds());				
 						gameOver.setVisible(true);
+						board.setGameOver(false);
+						board.restart();
 					}
 					setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 				}
