@@ -25,7 +25,8 @@ public class Game extends JComponent {
 	private static final long serialVersionUID = 1L;
 
 	private JButton restartEasy;
-	private JButton restartHard;
+	private JButton rightArrow;
+	private JButton leftArrow;
 	private JButton help;
 	private ButtonsPanel buttonsPanel;
 	private Board board;
@@ -36,11 +37,13 @@ public class Game extends JComponent {
 		setBackground(new Color(176, 224, 230));
 		setLayout(new BorderLayout());
 		restartEasy = new JButton("NEW EASY GAME");
-		restartHard = new JButton("NEW HARD GAME");
+		rightArrow = new JButton(" >");
+		leftArrow = new JButton("< ");
 		help = new JButton("HELP");
 		this.board = board;
 		addListeners();
-		buttonsPanel.addButton(help, restartEasy, restartHard);
+		buttonsPanel.addButton(help, restartEasy, rightArrow,
+				leftArrow);
 		this.buttonsPanel = buttonsPanel;
 		add(board, BorderLayout.CENTER);
 		add(this.buttonsPanel, BorderLayout.EAST);
@@ -49,7 +52,8 @@ public class Game extends JComponent {
 	private void addListeners() {
 		// TODO Auto-generated method stub
 		restartEasy.addMouseListener(mouseListener);
-		restartHard.addMouseListener(mouseListener);
+		rightArrow.addMouseListener(mouseListener);
+		leftArrow.addMouseListener(mouseListener);
 		help.addMouseListener(mouseListener);
 		this.board.addListeners(listener, pegMouseListener);
 	}
@@ -70,11 +74,11 @@ public class Game extends JComponent {
 						if (board.isBonus()) {
 							buttonsPanel.setBonus();
 						}
-						GameOver gameOver=null;
+						GameOver gameOver = null;
 						try {
-							gameOver = new GameOver(
-									buttonsPanel.getScore(),
-									buttonsPanel.getBonus(), buttonsPanel.getSeconds());
+							gameOver = new GameOver(buttonsPanel.getScore(),
+									buttonsPanel.getBonus(),
+									buttonsPanel.getSeconds());
 						} catch (FileNotFoundException e1) {
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
@@ -112,19 +116,26 @@ public class Game extends JComponent {
 			b.setBorderPainted(false);
 			b.setContentAreaFilled(false);
 			b.setBorder(null);
-			if (b == restartEasy) {
+			// if (b == restartEasy) {
+			if (b.getText() == "NEW EASY GAME") {
 				buttonsPanel.restart();
 				board.setLevel(1);
 				board.restart();
-			} else if (b == restartHard) {
+				// } else if (b == restartHard) {
+			} else if (b.getText() == "NEW HARD GAME") {
 				buttonsPanel.restart();
 				board.setLevel(2);
 				board.restart();
-			} else {
-
+			} else if (b == help) {
 				buttonsPanel.getHelp();
+			}else if(b==rightArrow || b==leftArrow){
+				if(restartEasy.getText()=="NEW EASY GAME"){
+					restartEasy.setText("NEW HARD GAME");
+				}else{
+					restartEasy.setText("NEW EASY GAME");
+				}
+				}
 			}
-		}
 
 		public void mouseEntered(MouseEvent e) {
 			JButton b = (JButton) e.getSource();

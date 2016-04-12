@@ -2,6 +2,7 @@ package colorJump;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.GraphicsEnvironment;
@@ -29,7 +30,7 @@ public class ButtonsPanel extends JPanel {
 	 */
 	private static final long serialVersionUID = 1L;
 	private JButton easyRestart;
-	private JButton hardRestart;
+	private JPanel restartPanel;
 	private JButton help;
 	private JLabel scoreLabel;
 	private JLabel scoreNumLabel;
@@ -46,14 +47,18 @@ public class ButtonsPanel extends JPanel {
 
 	@Inject
 	public ButtonsPanel(HelpDialog helpDialog) {
-		setLayout(new GridLayout(6, 0));
+		setLayout(new GridLayout(5, 0));
 		setOpaque(false);
 		setPanelSize();
 		this.helpDialog = helpDialog;
+		restartPanel = new JPanel();
+		restartPanel.setLayout(new FlowLayout());
+		setFonts();
+
 		points = 0;
 		bonus = 0;
 		seconds = 0;
-		setFonts();
+
 		logo = new JLabel(new ImageIcon(getClass().getResource("/Peg2.png")));
 		scorePanel = new JPanel(new BorderLayout());
 		removeDecor(scorePanel);
@@ -68,7 +73,7 @@ public class ButtonsPanel extends JPanel {
 		gameTimer = new JLabel("000", SwingConstants.CENTER);
 		formatLabel(gameTimer);
 		addTimer();
-		
+
 	}
 
 	private void addTimer() {
@@ -148,18 +153,20 @@ public class ButtonsPanel extends JPanel {
 	}
 
 	public void addButton(JButton helpButton, JButton easyRestart,
-			JButton hardRestart) {
+			JButton rightArrow, JButton leftArrow) {
+		formatButton(rightArrow);
+		formatButton(leftArrow);
 		this.easyRestart = easyRestart;
+		this.restartPanel.add(leftArrow);
+		restartPanel.add(this.easyRestart);
+		restartPanel.add(rightArrow);
 		formatButton(this.easyRestart);
-		this.hardRestart = hardRestart;
-		formatButton(this.hardRestart);
+		help = helpButton;
+		formatButton(help);
 		add(logo);
 		add(gameTimer);
 		add(scorePanel);
-		add(this.easyRestart);
-		add(this.hardRestart);
-		help = helpButton;
-		formatButton(help);
+		add(restartPanel);
 		add(help);
 	}
 
@@ -167,7 +174,7 @@ public class ButtonsPanel extends JPanel {
 		// TODO Auto-generated method stub4
 		points = 0;
 		bonus = 0;
-		seconds=0;
+		seconds = 0;
 		setScore();
 	}
 
