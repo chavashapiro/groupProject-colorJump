@@ -29,15 +29,16 @@ public class Game extends JComponent {
 	private ButtonsPanel buttonsPanel;
 	private Board board;
 	private int points;
-	private final int level1;
-	private final int level2;
+	private int level;
 	private GameOver gameOver;
 
 	@Inject
-	public Game(Board board, ButtonsPanel buttonsPanel, CheckAlgorithms checker, GameOver gameOver) {
+	public Game(Board board, ButtonsPanel buttonsPanel,
+			CheckAlgorithms checker, GameOver gameOver) {
 		setBackground(new Color(176, 224, 230));
 		setLayout(new BorderLayout());
 		restartEasy = new JButton("NEW EASY GAME");
+		restartEasy.setForeground(Color.BLUE);
 		rightArrow = new JButton(" >");
 		leftArrow = new JButton("< ");
 		help = new JButton("HELP");
@@ -48,8 +49,7 @@ public class Game extends JComponent {
 		this.buttonsPanel = buttonsPanel;
 		add(board, BorderLayout.CENTER);
 		add(this.buttonsPanel, BorderLayout.EAST);
-		level1 = 1;
-		level2 = 2;
+		level = 1;
 	}
 
 	private void addListeners() {
@@ -75,7 +75,8 @@ public class Game extends JComponent {
 						if (board.isBonus()) {
 							buttonsPanel.setBonus();
 						}
-						gameOver.setScoreTime(buttonsPanel.getScore(), buttonsPanel.getSeconds());
+						gameOver.setScoreTime(buttonsPanel.getScore(),
+								buttonsPanel.getSeconds());
 						gameOver.setVisible(true);
 						board.setGameOver(false);
 						board.restart();
@@ -106,19 +107,31 @@ public class Game extends JComponent {
 			b.setBorder(null);
 			if (b.getText() == "NEW EASY GAME") {
 				buttonsPanel.restart();
-				board.setLevel(level1);
+				level = 1;
+				board.setLevel(level);
 				board.restart();
 			} else if (b.getText() == "NEW HARD GAME") {
 				buttonsPanel.restart();
-				board.setLevel(level2);
+				level = 2;
+				board.setLevel(level);
 				board.restart();
 			} else if (b == help) {
 				buttonsPanel.getHelp();
 			} else if (b == rightArrow || b == leftArrow) {
 				if (restartEasy.getText() == "NEW EASY GAME") {
 					restartEasy.setText("NEW HARD GAME");
+					if (level == 2) {
+						restartEasy.setForeground(Color.BLUE);
+					} else {
+						restartEasy.setForeground(Color.BLACK);
+					}
 				} else {
 					restartEasy.setText("NEW EASY GAME");
+					if (level == 1) {
+						restartEasy.setForeground(Color.BLUE);
+					} else {
+						restartEasy.setForeground(Color.BLACK);
+					}
 				}
 			}
 		}
@@ -130,7 +143,13 @@ public class Game extends JComponent {
 
 		public void mouseExited(MouseEvent e) {
 			JButton b = (JButton) e.getSource();
-			b.setForeground(Color.BLACK);
+			if (b.getText().equals("NEW EASY GAME") && level == 1) {
+				b.setForeground(Color.BLUE);
+			} else if (b.getText().equals("NEW HARD GAME") && level == 2) {
+				b.setForeground(Color.BLUE);
+			} else {
+				b.setForeground(Color.BLACK);
+			}
 		}
 
 		public void mousePressed(MouseEvent e) {
