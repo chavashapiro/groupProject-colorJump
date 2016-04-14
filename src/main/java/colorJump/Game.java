@@ -38,10 +38,11 @@ public class Game extends JComponent {
 	private GameOver gameOver;
 	private ScheduledExecutorService musicExecutor;
 	private MusicThread music;
+	private BoardManager boardManager;
 
 	@Inject
 	public Game(Board board, ButtonsPanel buttonsPanel,
-			CheckAlgorithms checker, GameOver gameOver, MusicThread gameMusic) {
+			BoardManager boardManager, GameOver gameOver, MusicThread gameMusic) {
 		setBackground(new Color(176, 224, 230));
 		setLayout(new BorderLayout());
 		restartEasy = new JButton("NEW EASY GAME");
@@ -50,6 +51,7 @@ public class Game extends JComponent {
 		leftArrow = new JButton("< ");
 		help = new JButton("HELP");
 		this.board = board;
+		this.boardManager=boardManager;
 		this.gameOver = gameOver;
 		addListeners();
 		buttonsPanel.addButton(help, restartEasy, rightArrow, leftArrow);
@@ -67,7 +69,7 @@ public class Game extends JComponent {
 				music.start();
 			}
 		};
-		this.musicExecutor.scheduleAtFixedRate(playSound, 0, 15,
+		this.musicExecutor.scheduleAtFixedRate(playSound, 0, 14,
 				TimeUnit.SECONDS);
 	}
 
@@ -85,13 +87,13 @@ public class Game extends JComponent {
 			Thread thread = new Thread() {
 				public void run() {
 					setCursor(new Cursor(Cursor.WAIT_CURSOR));
-					points = board.pegClicked(e);
+					points = boardManager.pegClicked(e);
 					if (points > 0) {
 						buttonsPanel.addScore(points);
 					}
-					if (board.isGameOver()) {
+					if (boardManager.isGameOver()) {
 						buttonsPanel.pauseTimer();
-						if (board.isBonus()) {
+						if (boardManager.isBonus()) {
 							buttonsPanel.setBonus();
 						}
 						gameOver.setScoreTime(buttonsPanel.getScore(),
@@ -106,8 +108,8 @@ public class Game extends JComponent {
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
 						}
-						board.setGameOver(false);
-						board.restart();
+						boardManager.setGameOver(false);
+						boardManager.restart();
 						buttonsPanel.restart();
 					}
 					setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
@@ -122,8 +124,8 @@ public class Game extends JComponent {
 	MouseListener pegMouseListener = new MouseAdapter() {
 		public void mouseClicked(MouseEvent e) {
 			if (SwingUtilities.isRightMouseButton(e)) {
-				board.deselectFromPeg();
-				board.enableAllPegs();
+				boardManager.deselectFromPeg();
+				boardManager.enableAllPegs();
 			}
 		}
 
@@ -137,13 +139,13 @@ public class Game extends JComponent {
 			if (b.getText() == "NEW EASY GAME") {
 				buttonsPanel.restart();
 				level = 1;
-				board.setLevel(level);
-				board.restart();
+				boardManager.setLevel(level);
+				boardManager.restart();
 			} else if (b.getText() == "NEW HARD GAME") {
 				buttonsPanel.restart();
 				level = 2;
-				board.setLevel(level);
-				board.restart();
+				boardManager.setLevel(level);
+				boardManager.restart();
 			} else if (b == help) {
 				buttonsPanel.getHelp();
 			} else if (b == rightArrow || b == leftArrow) {
