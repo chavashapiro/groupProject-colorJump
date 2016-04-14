@@ -8,6 +8,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -31,10 +34,11 @@ public class Game extends JComponent {
 	private int points;
 	private int level;
 	private GameOver gameOver;
+	private ScheduledExecutorService musicExecutor;
 
 	@Inject
 	public Game(Board board, ButtonsPanel buttonsPanel,
-			CheckAlgorithms checker, GameOver gameOver) {
+			CheckAlgorithms checker, GameOver gameOver, final MusicThread music) {
 		setBackground(new Color(176, 224, 230));
 		setLayout(new BorderLayout());
 		restartEasy = new JButton("NEW EASY GAME");
@@ -50,6 +54,15 @@ public class Game extends JComponent {
 		add(board, BorderLayout.CENTER);
 		add(this.buttonsPanel, BorderLayout.EAST);
 		level = 1;
+		this.musicExecutor = Executors.newScheduledThreadPool(1);
+
+		Runnable playSound = new Runnable() {
+			public void run() {
+				music.start();
+			}
+		};
+		this.musicExecutor.scheduleAtFixedRate(playSound, 0, 15,
+				TimeUnit.SECONDS);
 	}
 
 	private void addListeners() {

@@ -101,9 +101,11 @@ public class ButtonsPanel extends JPanel {
 
 	private void setFonts() {
 		try {
-			GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+			GraphicsEnvironment ge = GraphicsEnvironment
+					.getLocalGraphicsEnvironment();
 
-			InputStream in = getClass().getResource("/BEBAS__.TTF").openStream();
+			InputStream in = getClass().getResource("/BEBAS__.TTF")
+					.openStream();
 			bebasFont = Font.createFont(Font.TRUETYPE_FONT, in).deriveFont(20f);
 
 			ge.registerFont(bebasFont);
@@ -146,7 +148,8 @@ public class ButtonsPanel extends JPanel {
 		helpDialog.setVisible(true);
 	}
 
-	public void addButton(JButton helpButton, JButton easyRestart, JButton rightArrow, JButton leftArrow) {
+	public void addButton(JButton helpButton, JButton easyRestart,
+			JButton rightArrow, JButton leftArrow) {
 		formatButton(rightArrow);
 		formatButton(leftArrow);
 		this.easyRestart = easyRestart;
