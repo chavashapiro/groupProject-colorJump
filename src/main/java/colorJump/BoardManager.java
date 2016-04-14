@@ -26,15 +26,19 @@ public class BoardManager {
 		setMiddlePeg();
 		enableAllPegs();
 	}
+
 	public boolean isGameOver() {
 		return gameOver;
 	}
+
 	public void setGameOver(boolean gameOver) {
 		this.gameOver = gameOver;
 	}
+
 	public boolean isBonus() {
 		return bonus;
 	}
+
 	public void setLevel(int newLevel) {
 		if (newLevel == level1) {
 			level = level1;
@@ -59,6 +63,7 @@ public class BoardManager {
 		}
 		setMiddlePeg();
 	}
+
 	public void disableAll() {
 		for (int i = 0; i < Board.ROWS; i++) {
 			for (int j = 0; j < Board.ROWS; j++) {
@@ -73,8 +78,6 @@ public class BoardManager {
 		}
 		fromPeg = null;
 	}
-
-	
 
 	public int pegClicked(ActionEvent event) {
 		int points = 0;
@@ -110,12 +113,9 @@ public class BoardManager {
 	private boolean checkOpenDown(int x, int y) {
 		int currColor = board.getPegColor(x, y);
 		int jumpOverColor;
-		if (x + 1 < Board.ROWS
-				&& currColor != (jumpOverColor = board.getPegColor(x + 1, y))
-				&& jumpOverColor != 0) {
+		if (x + 1 < Board.ROWS && currColor != (jumpOverColor = board.getPegColor(x + 1, y)) && jumpOverColor != 0) {
 			while (x + 1 < Board.ROWS
-					&& (jumpOverColor == board.getPegColor(x + 1, y) || board
-							.getPegColor(x + 1, y) == 0)) {
+					&& (jumpOverColor == board.getPegColor(x + 1, y) || board.getPegColor(x + 1, y) == 0)) {
 				x++;
 				if (board.getPegColor(x, y) == 0) {
 
@@ -132,12 +132,9 @@ public class BoardManager {
 	private boolean checkOpenRight(int x, int y) {
 		int currColor = board.getPegColor(x, y);
 		int jumpOverColor;
-		if (y + 1 < Board.ROWS
-				&& currColor != (jumpOverColor = board.getPegColor(x, y + 1))
-				&& jumpOverColor != 0) {
+		if (y + 1 < Board.ROWS && currColor != (jumpOverColor = board.getPegColor(x, y + 1)) && jumpOverColor != 0) {
 			while (y + 1 < Board.ROWS
-					&& (jumpOverColor == board.getPegColor(x, y + 1) || board
-							.getPegColor(x, y + 1) == 0)) {
+					&& (jumpOverColor == board.getPegColor(x, y + 1) || board.getPegColor(x, y + 1) == 0)) {
 				y++;
 				if (board.getPegColor(x, y) == 0) {
 
@@ -154,11 +151,8 @@ public class BoardManager {
 	private boolean checkOpenLeft(int x, int y) {
 		int currColor = board.getPegColor(x, y);
 		int jumpOverColor;
-		if (y > 0 && currColor != (jumpOverColor = board.getPegColor(x, y - 1))
-				&& jumpOverColor != 0) {
-			while (y > 0
-					&& (jumpOverColor == board.getPegColor(x, y - 1) || board
-							.getPegColor(x, y - 1) == 0)) {
+		if (y > 0 && currColor != (jumpOverColor = board.getPegColor(x, y - 1)) && jumpOverColor != 0) {
+			while (y > 0 && (jumpOverColor == board.getPegColor(x, y - 1) || board.getPegColor(x, y - 1) == 0)) {
 				y--;
 				if (board.getPegColor(x, y) == 0) {
 
@@ -175,11 +169,8 @@ public class BoardManager {
 	private boolean checkOpenUp(int x, int y) {
 		int currColor = board.getPegColor(x, y);
 		int jumpOverColor;
-		if (x > 0 && currColor != (jumpOverColor = board.getPegColor(x - 1, y))
-				&& jumpOverColor != 0) {
-			while (x > 0
-					&& (jumpOverColor == board.getPegColor(x - 1, y) || board
-							.getPegColor(x - 1, y) == 0)) {
+		if (x > 0 && currColor != (jumpOverColor = board.getPegColor(x - 1, y)) && jumpOverColor != 0) {
+			while (x > 0 && (jumpOverColor == board.getPegColor(x - 1, y) || board.getPegColor(x - 1, y) == 0)) {
 				x--;
 				if (board.getPegColor(x, y) == 0) {
 
@@ -353,8 +344,6 @@ public class BoardManager {
 		}
 	}
 
-	
-
 	private void setMiddlePeg() {
 		int middle = Board.ROWS / 2;
 		// pegs[middle][middle].setOpaque(false);
@@ -389,8 +378,7 @@ public class BoardManager {
 		if (board.getPegColor(x, y) == 0) {
 			return false;
 		}
-		return (checkRight(x, y) || checkLeft(x, y) || checkUp(x, y) || checkDown(
-				x, y));
+		return (checkRight(x, y) || checkLeft(x, y) || checkUp(x, y) || checkDown(x, y));
 	}
 
 	private boolean checkRight(int x, int y) {

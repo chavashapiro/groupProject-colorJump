@@ -47,22 +47,22 @@ public class HighScoreInfo implements Serializable {
 
 	public void setNewHighScore(int scoreNum, String name) {
 		// TODO Auto-generated method stub
-		if(scoreNum>highScore[0]){
-			highScore[2]=highScore[1];
-			highScore[1]=highScore[0];
-			highScoreNames[2]=highScoreNames[1];
-			highScoreNames[1]=highScoreNames[0];
-			highScore[0]=scoreNum;
-			highScoreNames[0]=name;
-		}else if(scoreNum> highScore[1]){
-			highScore[2]=highScore[1];
-			highScoreNames[2]=highScoreNames[1];
-			highScore[1]=scoreNum;
-			highScoreNames[1]=name;
-		}else{
-			highScore[2]= scoreNum;
-			highScoreNames[2]=name;
+		if (scoreNum > highScore[0]) {
+			highScore[2] = highScore[1];
+			highScore[1] = highScore[0];
+			highScoreNames[2] = highScoreNames[1];
+			highScoreNames[1] = highScoreNames[0];
+			highScore[0] = scoreNum;
+			highScoreNames[0] = name;
+		} else if (scoreNum > highScore[1]) {
+			highScore[2] = highScore[1];
+			highScoreNames[2] = highScoreNames[1];
+			highScore[1] = scoreNum;
+			highScoreNames[1] = name;
+		} else {
+			highScore[2] = scoreNum;
+			highScoreNames[2] = name;
 		}
-		
+
 	}
 }

@@ -77,8 +77,7 @@ public class Board extends JPanel {
 		return false;
 	}
 
-	public void addListeners(ActionListener listener,
-			MouseListener mouseListener) {
+	public void addListeners(ActionListener listener, MouseListener mouseListener) {
 		for (int i = 0; i < pegs.length; i++) {
 			for (int j = 0; j < pegs[i].length; j++) {
 				pegs[i][j].addActionListener(listener);
