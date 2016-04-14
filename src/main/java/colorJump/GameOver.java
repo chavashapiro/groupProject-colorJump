@@ -11,6 +11,7 @@ import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -36,16 +37,15 @@ public class GameOver extends JFrame {
 	 */
 	private static final long serialVersionUID = 1L;
 	private int scoreNum, secondsNum;
-	private JLabel score, seconds, secondsLbl, gameOver, scoreLbl,
-			highScoreLbl, highScoreLbl1, highScoreValueLbl1, highScoreLbl2,
-			highScoreLbl3, highScoreValue2, highScoreValue3;
+	private JLabel score, seconds, secondsLbl, gameOver, scoreLbl, highScoreLbl, highScoreLbl1, highScoreValueLbl1,
+			highScoreLbl2, highScoreLbl3, highScoreValue2, highScoreValue3;
 	private JButton ok;
 	private JPanel scorePanel;
 	private HighScoreInfo highScoreInfo;
+	private final File highScoreFile = new File(System.getProperty("user.home") + "\\HighScore.ser");
 
 	@Inject
-	public GameOver(HighScoreInfo highScoreInfo) throws FileNotFoundException,
-			ClassNotFoundException, IOException {
+	public GameOver(HighScoreInfo highScoreInfo) throws FileNotFoundException, ClassNotFoundException, IOException {
 		setTitle("");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setSize(650, 450);
@@ -55,6 +55,8 @@ public class GameOver extends JFrame {
 		Container container = getContentPane();
 		container.setBackground(new Color(176, 224, 230));
 		this.highScoreInfo = highScoreInfo;
+		checkFileExist();
+
 		getSavedHighScore();
 		scoreNum = 0;
 		secondsNum = 0;
@@ -63,8 +65,7 @@ public class GameOver extends JFrame {
 		title.setOpaque(false);
 		title.setLayout(new GridBagLayout());
 		title.setPreferredSize(new Dimension(this.getWidth(), 150));
-		gameOver = new JLabel(new ImageIcon(getClass().getResource(
-				"/game_over.png")));
+		gameOver = new JLabel(new ImageIcon(getClass().getResource("/game_over.png")));
 		gameOver.setHorizontalAlignment(JLabel.CENTER);
 		gameOver.setVerticalAlignment(JLabel.CENTER);
 		title.add(gameOver);
@@ -179,21 +180,29 @@ public class GameOver extends JFrame {
 
 	public void saveScore() throws FileNotFoundException, IOException {
 		if (scoreNum > highScoreInfo.lowestScore()) {
-			String name = JOptionPane
-					.showInputDialog(null,
-							"Congratulations! You've made it to the high score panel! \nEnter Player Name:");
+			String name = JOptionPane.showInputDialog(null,
+					"Congratulations! You've made it to the high score panel! \nEnter Player Name:");
 			highScoreInfo.setNewHighScore(scoreNum, name);
-			ObjectOutputStream output = new ObjectOutputStream(
-					new FileOutputStream("HighScore.ser"));
-			output.writeObject(highScoreInfo);
-			output.close();
+			serializeScore();
 		}
 	}
 
-	private void getSavedHighScore() throws FileNotFoundException, IOException,
-			ClassNotFoundException {
-		ObjectInputStream input = new ObjectInputStream(new FileInputStream(
-				"HighScore.ser"));
+	private void checkFileExist() throws FileNotFoundException, IOException {
+		// TODO Auto-generated method stub
+		if (!highScoreFile.exists()) {
+			serializeScore();
+		}
+	}
+
+	private void serializeScore() throws FileNotFoundException, IOException {
+		ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream(highScoreFile));
+
+		output.writeObject(highScoreInfo);
+		output.close();
+	}
+
+	private void getSavedHighScore() throws FileNotFoundException, IOException, ClassNotFoundException {
+		ObjectInputStream input = new ObjectInputStream(new FileInputStream(highScoreFile));
 		highScoreInfo = (HighScoreInfo) input.readObject();
 		// highScore = (Integer) input.readObject();
 		input.close();
