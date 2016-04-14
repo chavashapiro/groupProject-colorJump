@@ -8,6 +8,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -91,8 +93,18 @@ public class Game extends JComponent {
 						gameOver.setScoreTime(buttonsPanel.getScore(),
 								buttonsPanel.getSeconds());
 						gameOver.setVisible(true);
+						try {
+							gameOver.saveScore();
+						} catch (FileNotFoundException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						} catch (IOException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
 						board.setGameOver(false);
 						board.restart();
+						buttonsPanel.restart();
 					}
 					setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 				}
