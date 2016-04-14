@@ -37,10 +37,11 @@ public class Game extends JComponent {
 	private int level;
 	private GameOver gameOver;
 	private ScheduledExecutorService musicExecutor;
+	private MusicThread music;
 
 	@Inject
 	public Game(Board board, ButtonsPanel buttonsPanel,
-			CheckAlgorithms checker, GameOver gameOver, final MusicThread music) {
+			CheckAlgorithms checker, GameOver gameOver, MusicThread gameMusic) {
 		setBackground(new Color(176, 224, 230));
 		setLayout(new BorderLayout());
 		restartEasy = new JButton("NEW EASY GAME");
@@ -56,10 +57,13 @@ public class Game extends JComponent {
 		add(board, BorderLayout.CENTER);
 		add(this.buttonsPanel, BorderLayout.EAST);
 		level = 1;
+		this.music=gameMusic;
 		this.musicExecutor = Executors.newScheduledThreadPool(1);
 
 		Runnable playSound = new Runnable() {
 			public void run() {
+				
+				music= new MusicThread();
 				music.start();
 			}
 		};
