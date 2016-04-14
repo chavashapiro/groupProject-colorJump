@@ -36,16 +36,14 @@ public class GameOver extends JFrame {
 	 */
 	private static final long serialVersionUID = 1L;
 	private int scoreNum, secondsNum;
-	private JLabel score, seconds, secondsLbl, gameOver, scoreLbl,
-			highScoreLbl, highScoreLbl1, highScoreValueLbl1, highScoreLbl2,
-			highScoreLbl3, highScoreValue2, highScoreValue3;
+	private JLabel score, seconds, secondsLbl, gameOver, scoreLbl, highScoreLbl, highScoreLbl1, highScoreValueLbl1,
+			highScoreLbl2, highScoreLbl3, highScoreValue2, highScoreValue3;
 	private JButton ok;
 	private JPanel scorePanel;
 	private HighScoreInfo highScoreInfo;
 
 	@Inject
-	public GameOver(HighScoreInfo highScoreInfo) throws FileNotFoundException,
-			ClassNotFoundException, IOException {
+	public GameOver(HighScoreInfo highScoreInfo) throws FileNotFoundException, ClassNotFoundException, IOException {
 		setTitle("");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setSize(650, 450);
@@ -63,8 +61,7 @@ public class GameOver extends JFrame {
 		title.setOpaque(false);
 		title.setLayout(new GridBagLayout());
 		title.setPreferredSize(new Dimension(this.getWidth(), 150));
-		gameOver = new JLabel(new ImageIcon(getClass().getResource(
-				"/game_over.png")));
+		gameOver = new JLabel(new ImageIcon(getClass().getResource("/game_over.png")));
 		gameOver.setHorizontalAlignment(JLabel.CENTER);
 		gameOver.setVerticalAlignment(JLabel.CENTER);
 		title.add(gameOver);
@@ -179,21 +176,17 @@ public class GameOver extends JFrame {
 
 	public void saveScore() throws FileNotFoundException, IOException {
 		if (scoreNum > highScoreInfo.lowestScore()) {
-			String name = JOptionPane
-					.showInputDialog(null,
-							"Congratulations! You've made it to the high score panel! \nEnter Player Name:");
+			String name = JOptionPane.showInputDialog(null,
+					"Congratulations! You've made it to the high score panel! \nEnter Player Name:");
 			highScoreInfo.setNewHighScore(scoreNum, name);
-			ObjectOutputStream output = new ObjectOutputStream(
-					new FileOutputStream("HighScore.ser"));
+			ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream("HighScore.ser"));
 			output.writeObject(highScoreInfo);
 			output.close();
 		}
 	}
 
-	private void getSavedHighScore() throws FileNotFoundException, IOException,
-			ClassNotFoundException {
-		ObjectInputStream input = new ObjectInputStream(new FileInputStream(
-				"HighScore.ser"));
+	private void getSavedHighScore() throws FileNotFoundException, IOException, ClassNotFoundException {
+		ObjectInputStream input = new ObjectInputStream(new FileInputStream("HighScore.ser"));
 		highScoreInfo = (HighScoreInfo) input.readObject();
 		// highScore = (Integer) input.readObject();
 		input.close();

@@ -14,9 +14,8 @@ public class Peg extends JButton {
 	private int color;
 	private int x;
 	private int y;
-	private String[] colorArray = new String[] { "/empty_space.png",
-			"/green_peg.png", "/yellow_peg.png", "/purple_peg.png",
-			"/blue_peg.png", "/pink_peg.png", "/red_peg.png" };
+	private String[] colorArray = new String[] { "/empty_space.png", "/green_peg.png", "/yellow_peg.png",
+			"/purple_peg.png", "/blue_peg.png", "/pink_peg.png", "/red_peg.png" };
 
 	public Peg(int color, int x, int y) {
 		this.color = color;

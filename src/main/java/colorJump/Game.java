@@ -41,8 +41,8 @@ public class Game extends JComponent {
 	private BoardManager boardManager;
 
 	@Inject
-	public Game(Board board, ButtonsPanel buttonsPanel,
-			BoardManager boardManager, GameOver gameOver, MusicThread gameMusic) {
+	public Game(Board board, ButtonsPanel buttonsPanel, BoardManager boardManager, GameOver gameOver,
+			MusicThread gameMusic) {
 		setBackground(new Color(176, 224, 230));
 		setLayout(new BorderLayout());
 		restartEasy = new JButton("NEW EASY GAME");
@@ -51,7 +51,7 @@ public class Game extends JComponent {
 		leftArrow = new JButton("< ");
 		help = new JButton("HELP");
 		this.board = board;
-		this.boardManager=boardManager;
+		this.boardManager = boardManager;
 		this.gameOver = gameOver;
 		addListeners();
 		buttonsPanel.addButton(help, restartEasy, rightArrow, leftArrow);
@@ -59,18 +59,17 @@ public class Game extends JComponent {
 		add(board, BorderLayout.CENTER);
 		add(this.buttonsPanel, BorderLayout.EAST);
 		level = 1;
-		this.music=gameMusic;
+		this.music = gameMusic;
 		this.musicExecutor = Executors.newScheduledThreadPool(1);
 
 		Runnable playSound = new Runnable() {
 			public void run() {
-				
-				music= new MusicThread();
+
+				music = new MusicThread();
 				music.start();
 			}
 		};
-		this.musicExecutor.scheduleAtFixedRate(playSound, 0, 14,
-				TimeUnit.SECONDS);
+		this.musicExecutor.scheduleAtFixedRate(playSound, 0, 14, TimeUnit.SECONDS);
 	}
 
 	private void addListeners() {
@@ -96,8 +95,7 @@ public class Game extends JComponent {
 						if (boardManager.isBonus()) {
 							buttonsPanel.setBonus();
 						}
-						gameOver.setScoreTime(buttonsPanel.getScore(),
-								buttonsPanel.getSeconds());
+						gameOver.setScoreTime(buttonsPanel.getScore(), buttonsPanel.getSeconds());
 						gameOver.setVisible(true);
 						try {
 							gameOver.saveScore();

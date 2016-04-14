@@ -35,16 +35,15 @@ public class HelpDialog extends JDialog {
 		setFonts();
 		JLabel title = new JLabel("how to play:");
 		setFrameTitle(title);
-		JTextArea text = new JTextArea(
-				"\u2022  Jump over balls of another color to empty the grid.\n"
-						+ "\u2022  Score additional points per ball jumped over.\n"
-						+ "\u2022  You may jump over one or more balls of the same color,\n"
-						+ "     with a ball of another color.\n"
-						+ "\u2022  Bonus: if you remove all balls but one, score is doubled!\n"
-						+ "\u2022  Right click to clear selection.\n"
-						+ "\u2022  Easy level: Any ball you jump over will disappear.\n"
-						+ "\u2022  Hard level: You must jump over more than one ball for them to disappear.\n"
-						+ "     Otherwise, it will change to a different color.");
+		JTextArea text = new JTextArea("\u2022  Jump over balls of another color to empty the grid.\n"
+				+ "\u2022  Score additional points per ball jumped over.\n"
+				+ "\u2022  You may jump over one or more balls of the same color,\n"
+				+ "     with a ball of another color.\n"
+				+ "\u2022  Bonus: if you remove all balls but one, score is doubled!\n"
+				+ "\u2022  Right click to clear selection.\n"
+				+ "\u2022  Easy level: Any ball you jump over will disappear.\n"
+				+ "\u2022  Hard level: You must jump over more than one ball for them to disappear.\n"
+				+ "     Otherwise, it will change to a different color.");
 		setTextArea(text);
 		container.add(title, BorderLayout.NORTH);
 		container.add(text, BorderLayout.CENTER);
@@ -67,12 +66,9 @@ public class HelpDialog extends JDialog {
 	private void setFonts() {
 		try {
 
-			GraphicsEnvironment ge = GraphicsEnvironment
-					.getLocalGraphicsEnvironment();
-			InputStream in = getClass().getResource("/PRISTINA.TTF")
-					.openStream();
-			pristinaFont = Font.createFont(Font.TRUETYPE_FONT, in).deriveFont(
-					30f);
+			GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+			InputStream in = getClass().getResource("/PRISTINA.TTF").openStream();
+			pristinaFont = Font.createFont(Font.TRUETYPE_FONT, in).deriveFont(30f);
 			ge.registerFont(pristinaFont);
 		} catch (FontFormatException e) {
 			e.printStackTrace();
